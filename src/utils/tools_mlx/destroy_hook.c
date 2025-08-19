@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mini_rt.h                                          :+:      :+:    :+:   */
+/*   destroy_hook.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/19 13:08:33 by okientzl          #+#    #+#             */
-/*   Updated: 2025/08/19 14:18:49 by okientzl         ###   ########.fr       */
+/*   Created: 2025/08/19 14:15:06 by okientzl          #+#    #+#             */
+/*   Updated: 2025/08/19 14:19:10 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "../../../include/mini_rt.h"
 
-#include <math.h>
-#include "../lib/minilibx-linux/mlx.h"
-#include "struct.h" 
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
+int	key_hook(int keycode, t_mlx *data)
+{
+	if (keycode == 65307)
+		destroy_hook(data);
+	return (0);
+}
 
-// utils
-void	*ft_calloc(size_t count, size_t size);
+int	destroy_hook(void *param)
+{
+	t_mlx	*data;
 
-//tools_mlx
-int	key_hook(int keycode, t_mlx *data);
-int	destroy_hook(void *param);
+	data = (t_mlx *)param;
+	mlx_loop_end(data->mlx);
+	/*close_app(data, false, true);*/
+	exit(0);
+	return (0);
+}
