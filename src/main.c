@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 12:48:31 by okientzl          #+#    #+#             */
-/*   Updated: 2025/08/19 15:20:41 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/08/19 16:28:03 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../include/mini_rt.h"
@@ -57,7 +57,8 @@ int	main  (int argc, char **argv)
 	data = NULL;
 	if (argc == 2)
 	{
-		printf("%s\n", argv[1]);
+		printf("%s\n", argv[1]);// check argv[1] before parse
+		// if file or contained is not good return (1)
 		data = (t_mlx *)ft_calloc(1, sizeof(t_mlx));
 		if (init_app(data))
 		{
