@@ -21,10 +21,12 @@
 void	*ft_calloc(size_t count, size_t size);
 
 //tools_mlx
+bool	init_app(t_mlx *data);
 void	refresh_image(t_mlx *data);
 int		key_hook(int keycode, t_mlx *data);
 int		destroy_hook(void *param);
 
 //display
-void	draw(t_mlx *data);
+
+void draw(t_mlx *data, t_scene scene);
 

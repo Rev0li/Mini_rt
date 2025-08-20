@@ -6,14 +6,22 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 12:52:42 by okientzl          #+#    #+#             */
-/*   Updated: 2025/08/19 15:20:19 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/08/20 18:02:14 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_STRUCTS_H
 # define MINIRT_STRUCTS_H
 
+
 # define W_HEIGHT 1000
-# define W_WIDTH 1000
+# define W_WIDTH 2000
+
+#include <unistd.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <stdbool.h>
+#include <limits.h>
+#include <stdio.h>
 
 typedef struct s_mlx
 {
@@ -37,10 +45,17 @@ typedef struct s_vec3
 // Structure pour les couleurs
 typedef struct s_color
 {
-    int r;
-    int g;
-    int b;
+    unsigned char	r;
+    unsigned char	g;
+    unsigned char	b;
 } t_color;
+
+// Rayon (origine + direction)
+typedef struct s_ray
+{
+    t_vec3 origin;
+    t_vec3 direction;
+} t_ray;
 
 // Structure pour l'éclairage ambiant (A)
 typedef struct s_ambient
@@ -69,7 +84,7 @@ typedef struct s_light
 typedef struct s_sphere
 {
     t_vec3 center;       // coordonnées x,y,z
-    double diameter;     // > 0
+    double radius;     // > 0
     t_color color;       // RGB [0-255]
 } t_sphere;
 
@@ -91,31 +106,38 @@ typedef struct s_cylinder
     t_color color;       // RGB [0-255]
 } t_cylinder;
 
-// Structure principale de la scène
+// Scène
 typedef struct s_scene
 {
-    // Éléments uniques (définis par une majuscule)
-    t_ambient ambient;      // A - obligatoire
-    t_camera camera;        // C - obligatoire
-    
-    // Lumières (peut y en avoir plusieurs)
-	// L si seul, et l si plusieurs ?!
-    t_light *lights;        // tableau dynamique
-    int nb_lights;
-    
-    // Objets (peut y en avoir plusieurs)
-    t_sphere *spheres;      // tableau dynamique
-    int nb_spheres;
-    
-    t_plane *planes;        // tableau dynamique
-    int nb_planes;
-    
-    t_cylinder *cylinders;  // tableau dynamique
-    int nb_cylinders;
-    
-    // Flags pour vérifier que les éléments obligatoires sont présents
-    int has_ambient;
-    int has_camera;
+    t_camera camera;
+    t_sphere sphere;
+    t_plane plane;
 } t_scene;
+
+/*// Structure principale de la scène*/
+/*typedef struct s_scene*/
+/*{*/
+/*    // Éléments uniques (définis par une majuscule)*/
+/*    t_ambient ambient;      // A - obligatoire*/
+/*    t_camera camera;        // C - obligatoire*/
+/**/
+/*    t_light light;        // tableau dynamique*/
+/*    int nb_lights;*/
+/**/
+/*    // Objets (peut y en avoir plusieurs)*/
+/*    t_sphere *spheres;      // tableau dynamique*/
+/*    int nb_spheres;*/
+/**/
+/*    t_plane *planes;        // tableau dynamique*/
+/*    int nb_planes;*/
+/**/
+/*    t_cylinder *cylinders;  // tableau dynamique*/
+/*    int nb_cylinders;*/
+/**/
+/*    // Flags pour vérifier que les éléments obligatoires sont présents*/
+/*    bool    has_ambient;*/
+/*    bool    has_camera;*/
+/*    bool    has_light;*/
+/*} t_scene;*/
 
 #endif
