@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 13:08:33 by okientzl          #+#    #+#             */
-/*   Updated: 2025/08/19 14:18:49 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/08/20 15:03:12 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,10 @@
 void	*ft_calloc(size_t count, size_t size);
 
 //tools_mlx
-int	key_hook(int keycode, t_mlx *data);
-int	destroy_hook(void *param);
+void	refresh_image(t_mlx *data);
+int		key_hook(int keycode, t_mlx *data);
+int		destroy_hook(void *param);
+
+//display
+void	draw(t_mlx *data);
+

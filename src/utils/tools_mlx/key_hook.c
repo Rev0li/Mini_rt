@@ -1,39 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   destroy_hook.c                                     :+:      :+:    :+:   */
+/*   key_hook.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/19 14:15:06 by okientzl          #+#    #+#             */
-/*   Updated: 2025/08/19 16:28:01 by okientzl         ###   ########.fr       */
+/*   Created: 2025/08/20 13:46:13 by okientzl          #+#    #+#             */
+/*   Updated: 2025/08/20 14:26:53 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../../include/mini_rt.h"
 
-static void	free_data(t_mlx *data)
+void refresh_image(t_mlx *data)
 {
-	if (!data)
-		return ;
-	if (data->img)
-		mlx_destroy_image(data->mlx, data->img);
-	if (data->window)
-		mlx_destroy_window(data->mlx, data->window);
-	if (data->mlx)
-	{
-		mlx_destroy_display(data->mlx);
-		free(data->mlx);
-	}
-	free(data);
+    mlx_put_image_to_window(data->mlx, data->window, data->img, 0, 0);
 }
 
-int	destroy_hook(void *param)
+int	key_hook(int keycode, t_mlx *data)
 {
-	t_mlx	*data;
-
-	data = (t_mlx *)param;
-	mlx_loop_end(data->mlx);
-	free_data(data);
-	exit(0);
+	printf("Key pressed: %d\n", keycode);
+	if (keycode == 65307)
+		destroy_hook(data);
+	else if (keycode == 114)
+		refresh_image(data);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 12:48:31 by okientzl          #+#    #+#             */
-/*   Updated: 2025/08/19 16:28:03 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/08/20 14:27:53 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../include/mini_rt.h"
@@ -62,6 +62,7 @@ int	main  (int argc, char **argv)
 		data = (t_mlx *)ft_calloc(1, sizeof(t_mlx));
 		if (init_app(data))
 		{
+			draw(data);
 			mlx_hook(data->window, 2, 1L << 0, key_hook, data);
 			mlx_hook(data->window, 17, 0, destroy_hook, data);
 			mlx_loop(data->mlx);

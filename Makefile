@@ -7,8 +7,10 @@ MLX_FLAGS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
 MLX_LIB = $(MLX_DIR)/libmlx.a
 
 SRCS = src/main.c \
+	   src/display/draw.c \
 	   src/utils/ft_calloc.c \
-	   src/utils/tools_mlx/destroy_hook.c
+	   src/utils/tools_mlx/destroy_hook.c \
+	   src/utils/tools_mlx/key_hook.c
 
 HEADER = include/mini_rt.h	\
 		 include/struct.h
