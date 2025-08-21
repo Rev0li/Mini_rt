@@ -6,7 +6,7 @@ MLX_DIR = ./lib/minilibx-linux
 MLX_FLAGS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
 MLX_LIB = $(MLX_DIR)/libmlx.a
 
-SRCS = src/main.c src/ft_atoi.c src/get_next_line_utils.c src/get_next_line.c
+SRCS = src/main.c src/ft_atoi.c src/get_next_line_utils.c src/get_next_line.c src/parsing.c src/parsing2.c src/parsing_utils.c src/utils.c
 
 HEADER = include/mini_rt.h	\
 		 include/struct.h

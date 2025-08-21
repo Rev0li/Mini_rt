@@ -6,7 +6,7 @@
 /*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 12:01:50 by yafahfou          #+#    #+#             */
-/*   Updated: 2025/08/20 15:33:39 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/08/21 14:20:24 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,5 +132,21 @@ void	ft_reset(char *s, int stop);
 double	ft_atoi(const char *str);
 int		is_digit(char c);
 int		ft_strlen(const char *str);
-
+int		set_color(t_color *color, int n, int choose);
+int		set_ambient_color(char *line, t_scene *scene, int index);
+void	set_camera_pos(t_camera *camera, char *line, int pos);
+int		set_orientation_values(t_camera *camera, char *line, int pos);
+int		set_fov_value(t_scene *scene, char *line, int index);
+int		check_file(char *file, t_scene *scene);
+int		parse_file(char *file, t_scene *scene);
+int		parse_line(char *line, t_scene *scene);
+int		set_cam_orientation(t_scene *scene, char *line, int index);
+int		set_camera(char *line, t_scene *scene, int index);
+int		set_cylinder(char *line, t_scene *scene, int index);
+int		set_plane(char *line, t_scene *scene, int index);
+int		set_sphere(char *line, t_scene *scene, int index);
+int		set_light(char *line, t_scene *scene, int index);
+void	open_check(int fd);
+void	exit_error(char *message);
+int		set_ambient_ratio(char *line, t_scene *scene, int index);
 #endif
