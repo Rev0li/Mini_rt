@@ -6,30 +6,56 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 12:48:31 by okientzl          #+#    #+#             */
-/*   Updated: 2025/08/20 18:02:15 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/08/21 13:45:55 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../include/mini_rt.h"
 
-// Initialise une scène simple avec une caméra, une sphère et un plan
+// =====================================================================
+// Init hardcoded scene avec Ambient + Light
+// =====================================================================
 t_scene init_hardcoded_scene(void)
 {
     t_scene scene;
 
+    // -----------------------------------------------------------------
     // Caméra : positionnée à (0,0,0), regarde vers -Z, FOV = 70°
-    scene.camera.position = (t_vec3){0, 0, 0};
+    // -----------------------------------------------------------------
+    scene.camera.position    = (t_vec3){0, 0, 0};
     scene.camera.orientation = (t_vec3){0, 0, -1};
-    scene.camera.fov = 70.0;
+    scene.camera.fov         = 50.0;
 
+    // -----------------------------------------------------------------
     // Sphère : centre à (0,0,-5), rayon = 1, couleur rouge
+    // -----------------------------------------------------------------
     scene.sphere.center = (t_vec3){0, 0, -5};
-    scene.sphere.radius = 1.0;
-    scene.sphere.color = (t_color){255, 0, 0};
+    scene.sphere.radius = 1;
+    scene.sphere.color  = (t_color){255, 0, 0};
 
+    // -----------------------------------------------------------------
     // Plan : point à (0,-1,0), normale vers le haut (0,1,0), couleur bleue
-    scene.plane.point = (t_vec3){0, -1, 0};
+    // -----------------------------------------------------------------
+    scene.plane.point  = (t_vec3){0, -1.2, 0};
     scene.plane.normal = (t_vec3){0, 1, 0};
-    scene.plane.color = (t_color){0, 0, 255};
+    scene.plane.color  = (t_color){0, 0, 255};
+
+    // -----------------------------------------------------------------
+    // Lumière ambiante : faible lumière "globale"
+    // ratio = 0.2 => 20% d'intensité
+    // couleur blanche (255,255,255)
+    // -----------------------------------------------------------------
+    scene.ambient.ratio = 0.2;
+    scene.ambient.color = (t_color){255, 255, 255};
+
+    // -----------------------------------------------------------------
+    // Lumière ponctuelle : placée dans la scène
+    // position = (5,5,0)
+    // brightness = 0.8 (80% d’intensité)
+    // couleur blanche
+    // -----------------------------------------------------------------
+    scene.light.position   = (t_vec3){5, 5, 0};
+    scene.light.brightness = 0.8;
+    scene.light.color      = (t_color){255, 255, 255};
 
     return scene;
 }
@@ -49,6 +75,7 @@ int	main  (int argc, char **argv)
 		{
 	        t_scene scene = init_hardcoded_scene();
 			draw(data, scene);
+			/*draw3d(data, scene);*/
 			mlx_hook(data->window, 2, 1L << 0, key_hook, data);
 			mlx_hook(data->window, 17, 0, destroy_hook, data);
 			mlx_loop(data->mlx);

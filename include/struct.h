@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 12:52:42 by okientzl          #+#    #+#             */
-/*   Updated: 2025/08/20 18:02:14 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/08/21 13:45:43 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_STRUCTS_H
@@ -106,12 +106,14 @@ typedef struct s_cylinder
     t_color color;       // RGB [0-255]
 } t_cylinder;
 
-// Scène
+
 typedef struct s_scene
 {
     t_camera camera;
     t_sphere sphere;
     t_plane plane;
+    t_ambient ambient;  // lumière ambiante
+    t_light light;      // lumière ponctuelle
 } t_scene;
 
 /*// Structure principale de la scène*/

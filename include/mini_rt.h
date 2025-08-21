@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 13:08:33 by okientzl          #+#    #+#             */
-/*   Updated: 2025/08/20 15:03:12 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/08/21 13:45:45 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,5 @@ int		destroy_hook(void *param);
 //display
 
 void draw(t_mlx *data, t_scene scene);
+void draw3d(t_mlx *data, t_scene scene);
 

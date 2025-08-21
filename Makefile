@@ -8,7 +8,9 @@ MLX_LIB = $(MLX_DIR)/libmlx.a
 
 SRCS = src/main.c \
 	   src/display/draw.c \
+	   src/display/draw3d.c \
 	   src/utils/ft_calloc.c \
+	   src/utils/tools_mlx/init_app.c \
 	   src/utils/tools_mlx/destroy_hook.c \
 	   src/utils/tools_mlx/key_hook.c
 
