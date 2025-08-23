@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 13:37:52 by yafahfou          #+#    #+#             */
-/*   Updated: 2025/08/21 14:25:49 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/08/22 16:05:25 by yassinefahf      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/mini_rt.h"
 
-int	set_color(t_color *color, int n, int choose)
+int set_color(t_color *color, int n, int choose)
 {
 	if (n < 0 || n > 255)
 		return (-1);
@@ -25,12 +25,12 @@ int	set_color(t_color *color, int n, int choose)
 	return (1);
 }
 
-int	set_ambient_color(char *line, t_scene *scene, int index)
+int parse_color(char *line, t_color *color, int index)
 {
-	int	i;
-	int	color;
+	int i;
+	int option;
 
-	color = 1;
+	option = 1;
 	i = index;
 	while (line[index])
 	{
@@ -39,9 +39,9 @@ int	set_ambient_color(char *line, t_scene *scene, int index)
 			i = index;
 			while (is_digit(line[i]))
 				i++;
-			if (set_color(&scene->ambient.color, ft_atoi(line + index), color) == -1)
+			if (set_color(color, ft_atoi(line + index), option) == -1)
 				return (-1);
-			color++;
+			option++;
 			index = i;
 		}
 		else
@@ -50,7 +50,7 @@ int	set_ambient_color(char *line, t_scene *scene, int index)
 	return (1);
 }
 
-void	set_camera_pos(t_camera *camera, char *line, int pos)
+void set_camera_pos(t_camera *camera, char *line, int pos)
 {
 	// printf("ici\n");
 	if (pos == 1)
@@ -63,29 +63,29 @@ void	set_camera_pos(t_camera *camera, char *line, int pos)
 
 int set_orientation_values(t_camera *camera, char *line, int pos)
 {
-	
+
 	if (pos == 1)
 	{
 		camera->orientation.x = ft_atoi(line);
-		if (camera->orientation.x < - 1 || camera->orientation.x > 1)
+		if (camera->orientation.x < -1 || camera->orientation.x > 1)
 			return (-1);
 	}
 	else if (pos == 2)
 	{
 		camera->orientation.y = ft_atoi(line);
-		if (camera->orientation.y < - 1 || camera->orientation.y > 1)
+		if (camera->orientation.y < -1 || camera->orientation.y > 1)
 			return (-1);
 	}
 	else
 	{
 		camera->orientation.z = ft_atoi(line);
-		if (camera->orientation.z < - 1 || camera->orientation.z > 1)
+		if (camera->orientation.z < -1 || camera->orientation.z > 1)
 			return (-1);
 	}
 	return (1);
 }
 
-int	set_fov_value(t_scene *scene, char *line, int index)
+int set_fov_value(t_scene *scene, char *line, int index)
 {
 	// printf("line%s\n", line + index);
 	scene->camera.fov = ft_atoi(line + index);

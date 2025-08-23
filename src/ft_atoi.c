@@ -3,21 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 16:58:06 by yassine           #+#    #+#             */
-/*   Updated: 2025/08/20 15:34:23 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/08/22 14:46:15 by yassinefahf      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/mini_rt.h"
 
-double	to_double(double total, int sign, const char *str)
+double to_double(double total, int sign, const char *str)
 {
-	int	i;
-	int	div;
+	int i;
 	i = 0;
-	div = 10;
 
 	while (str[i] && ('0' <= str[i] && str[i] <= '9'))
 	{
@@ -32,11 +30,11 @@ double	to_double(double total, int sign, const char *str)
 	return (total * sign);
 }
 
-double	ft_atoi(const char *str)
+double ft_atoi(const char *str)
 {
-	size_t	i;
-	double	total;
-	long	sign;
+	size_t i;
+	double total;
+	long sign;
 
 	i = 0;
 	total = 0;

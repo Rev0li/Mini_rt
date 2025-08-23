@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 12:15:04 by yafahfou          #+#    #+#             */
-/*   Updated: 2025/08/21 14:52:33 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/08/22 16:13:55 by yassinefahf      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/mini_rt.h"
 
-void	set_light_pos(t_light *light, char *line, int pos)
+void set_light_pos(t_light *light, char *line, int pos)
 {
 	if (pos == 1)
 		light->position.x = ft_atoi(line);
@@ -22,7 +22,7 @@ void	set_light_pos(t_light *light, char *line, int pos)
 		light->position.z = ft_atoi(line);
 }
 
-int	set_light_brightness(t_scene *scene, char *line, int index)
+int set_light_brightness(t_scene *scene, char *line, int index)
 {
 	scene->light.brightness = ft_atoi(line + index);
 	if (scene->light.brightness < 0 || scene->light.brightness > 1)
@@ -30,10 +30,10 @@ int	set_light_brightness(t_scene *scene, char *line, int index)
 	return (1);
 }
 
-int	set_light(char *line, t_scene *scene, int index)
+int set_light(char *line, t_scene *scene, int index)
 {
-	int	i;
-	int	pos;
+	int i;
+	int pos;
 
 	i = index;
 	pos = 1;
@@ -57,50 +57,62 @@ int	set_light(char *line, t_scene *scene, int index)
 	return (-1);
 }
 
-void	set_sp_pos(t_sphere *sphere, char *line, int pos)
+void set_sp_pos(t_scene *scene, char *line, int pos)
 {
 	if (pos == 1)
-		sphere->center.x = ft_atoi(line);
+		scene->spheres[scene->sphere_index].center.x = ft_atoi(line);
 	else if (pos == 2)
-		sphere->center.y = ft_atoi(line);
+		scene->spheres[scene->sphere_index].center.y = ft_atoi(line);
 	else
-		sphere->center.z = ft_atoi(line);
+		scene->spheres[scene->sphere_index].center.z = ft_atoi(line);
 }
 
-int	set_sp_diameter(t_scene *scene, char *line, int index)
+int set_sp_diameter(t_scene *scene, char *line, int index)
 {
-	int	i;
-	int	pos;
+	int i;
+	int res;
 
-	i = index;
+	res = 1;
+	printf("line %s\n", line);
 	while (line[index])
 	{
 		if (is_digit(line[index]))
 		{
-			scene->spheres.
+			i = index;
+			while (is_digit(line[i]) || (line[i] == '.' && (is_digit(line[i + 1]))))
+				i++;
+			scene->spheres[scene->sphere_index].diameter = ft_atoi(line);
+			index = i;
+			res = parse_color(line + index, &scene->spheres[scene->sphere_index].color, index);
+			break;
 		}
+		else
+			index++;
 	}
-	return (1);
+	scene->sphere_index++;
+	return (res);
 }
 
 int set_sphere(char *line, t_scene *scene, int index)
 {
-	int	i;
-	int	pos;
+	int i;
+	int pos;
 
 	i = index;
 	pos = 1;
-	scene->nb_spheres++;
 	while (line[index])
 	{
-		if (is_digit(line[index]))
+		if (is_digit(line[index]) || (line[index] == '-' && is_digit(line[index + 1])))
 		{
 			if (pos == 4)
-				return (set_sp_diameter(scene, line, index));
+			{
+				scene->sphere_index++;
+				return (set_sp_diameter(scene, line + index, index));
+			}
 			i = index;
-			while (is_digit(line[i]) || (line[i] == '.' && (is_digit(line[i + 1]))))
+			while (is_digit(line[i]) || (line[i] == '.' && (is_digit(line[i + 1]))) || line[i] == '-')
 				i++;
-			set_sp_pos(&scene->spheres, line + index, pos);
+			set_sp_pos(scene, line + index, pos);
 			pos++;
 			index = i;
 		}
@@ -113,7 +125,7 @@ int set_plane(char *line, t_scene *scene, int index)
 {
 	(void)line;
 	(void)scene;
-	index = 0;
+	(void)index;
 	return (1);
 }
 
@@ -121,11 +133,11 @@ int set_cylinder(char *line, t_scene *scene, int index)
 {
 	(void)line;
 	(void)scene;
-	index = 0;
+	(void)index;
 	return (1);
 }
 
-void	prepare_scene(t_scene *scene)
+void prepare_scene(t_scene *scene)
 {
 	scene->has_ambient = false;
 	scene->has_camera = false;
@@ -134,11 +146,14 @@ void	prepare_scene(t_scene *scene)
 	scene->nb_lights = 0;
 	scene->nb_planes = 0;
 	scene->nb_spheres = 0;
+	scene->sphere_index = 0;
+	scene->plane_index = 0;
+	scene->cylinder_index = 0;
 }
 
 int main(int ac, char **av)
 {
-	t_scene	scene;
+	t_scene scene;
 
 	prepare_scene(&scene);
 	if (ac == 2)
@@ -161,4 +176,9 @@ int main(int ac, char **av)
 	printf("light.position.y %f\n", scene.light.position.y);
 	printf("light.position.z %f\n", scene.light.position.z);
 	printf("camera.light.brightness %f\n", scene.light.brightness);
+	printf("sphere.center.x %f\n", scene.spheres[1].center.x);
+	printf("sphere.center.y %f\n", scene.spheres[1].center.y);
+	printf("sphere.center.z %f\n", scene.spheres[1].center.z);
+	printf("sphere numb %d\n", scene.nb_spheres);
+	printf("sphere.diameter %f\nr", scene.spheres[0].diameter);
 }
