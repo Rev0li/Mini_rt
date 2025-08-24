@@ -6,7 +6,7 @@
 /*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 12:15:04 by yafahfou          #+#    #+#             */
-/*   Updated: 2025/08/22 16:13:55 by yassinefahf      ###   ########.fr       */
+/*   Updated: 2025/08/24 20:52:24 by yassinefahf      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int set_sp_diameter(t_scene *scene, char *line, int index)
 	int res;
 
 	res = 1;
-	printf("line %s\n", line);
+	printf("line %s\n", line + index);
 	while (line[index])
 	{
 		if (is_digit(line[index]))
@@ -81,7 +81,7 @@ int set_sp_diameter(t_scene *scene, char *line, int index)
 			i = index;
 			while (is_digit(line[i]) || (line[i] == '.' && (is_digit(line[i + 1]))))
 				i++;
-			scene->spheres[scene->sphere_index].diameter = ft_atoi(line);
+			scene->spheres[scene->sphere_index].diameter = ft_atoi(line + index);
 			index = i;
 			res = parse_color(line + index, &scene->spheres[scene->sphere_index].color, index);
 			break;
@@ -105,10 +105,7 @@ int set_sphere(char *line, t_scene *scene, int index)
 		if (is_digit(line[index]) || (line[index] == '-' && is_digit(line[index + 1])))
 		{
 			if (pos == 4)
-			{
-				scene->sphere_index++;
-				return (set_sp_diameter(scene, line + index, index));
-			}
+				return (set_sp_diameter(scene, line, index));
 			i = index;
 			while (is_digit(line[i]) || (line[i] == '.' && (is_digit(line[i + 1]))) || line[i] == '-')
 				i++;
@@ -176,9 +173,9 @@ int main(int ac, char **av)
 	printf("light.position.y %f\n", scene.light.position.y);
 	printf("light.position.z %f\n", scene.light.position.z);
 	printf("camera.light.brightness %f\n", scene.light.brightness);
-	printf("sphere.center.x %f\n", scene.spheres[1].center.x);
-	printf("sphere.center.y %f\n", scene.spheres[1].center.y);
-	printf("sphere.center.z %f\n", scene.spheres[1].center.z);
+	printf("sphere.center.x %f\n", scene.spheres[0].center.x);
+	printf("sphere.center.y %f\n", scene.spheres[0].center.y);
+	printf("sphere.center.z %f\n", scene.spheres[0].center.z);
 	printf("sphere numb %d\n", scene.nb_spheres);
 	printf("sphere.diameter %f\nr", scene.spheres[0].diameter);
 }
