@@ -6,7 +6,7 @@
 /*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 12:15:04 by yafahfou          #+#    #+#             */
-/*   Updated: 2025/08/24 20:52:24 by yassinefahf      ###   ########.fr       */
+/*   Updated: 2025/08/24 21:00:55 by yassinefahf      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int set_sp_diameter(t_scene *scene, char *line, int index)
 				i++;
 			scene->spheres[scene->sphere_index].diameter = ft_atoi(line + index);
 			index = i;
-			res = parse_color(line + index, &scene->spheres[scene->sphere_index].color, index);
+			res = parse_color(line, &scene->spheres[scene->sphere_index].color, index);
 			break;
 		}
 		else
@@ -118,6 +118,7 @@ int set_sphere(char *line, t_scene *scene, int index)
 	}
 	return (1);
 }
+
 int set_plane(char *line, t_scene *scene, int index)
 {
 	(void)line;
@@ -178,4 +179,5 @@ int main(int ac, char **av)
 	printf("sphere.center.z %f\n", scene.spheres[0].center.z);
 	printf("sphere numb %d\n", scene.nb_spheres);
 	printf("sphere.diameter %f\nr", scene.spheres[0].diameter);
+	printf("colors: %d, %d, %d\n", scene.spheres[2].color.r, scene.spheres[2].color.g, scene.spheres[2].color.b);
 }
