@@ -6,7 +6,7 @@
 /*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 13:40:43 by yafahfou          #+#    #+#             */
-/*   Updated: 2025/08/22 16:10:17 by yassinefahf      ###   ########.fr       */
+/*   Updated: 2025/08/25 19:57:42 by yassinefahf      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int set_camera(char *line, t_scene *scene, int index)
 	i = index;
 	pos = 1;
 	scene->has_camera = true;
-	// printf("index: %d\n", index);
 	while (line[index])
 	{
 		if (is_digit(line[index]))

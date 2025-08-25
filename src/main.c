@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 12:15:04 by yafahfou          #+#    #+#             */
-/*   Updated: 2025/08/25 12:36:28 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/08/25 22:47:42 by yassinefahf      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,11 @@ int set_light(char *line, t_scene *scene, int index)
 
 int set_sp_pos(t_scene *scene, char *line, int pos)
 {
-	// int	check;
+	int check;
 
-	// check = ft_atoi(line);
-	// if (check == 0 && line[0] != '0')
-	// 	return (-1);
-	// printf("ici\n");
+	check = ft_atoi(line);
+	if (check == 0 && line[0] != '0')
+		return (-1);
 	if (pos == 1)
 		scene->spheres[scene->sphere_index].center.x = ft_atoi(line);
 	else if (pos == 2)
@@ -126,9 +125,9 @@ int set_sphere(char *line, t_scene *scene, int index)
 	return (1);
 }
 
-int	set_pl_point(t_scene *scene, char *line, int pos)
+int set_pl_point(t_scene *scene, char *line, int pos)
 {
-	int	check;
+	int check;
 
 	check = ft_atoi(line);
 	if (check == 0 && line && line[0] != '0')
@@ -142,9 +141,9 @@ int	set_pl_point(t_scene *scene, char *line, int pos)
 	return (1);
 }
 
-int	set_pl_vector(t_scene *scene, char *line, int pos)
+int set_pl_vector(t_scene *scene, char *line, int pos)
 {
-	int	check;
+	int check;
 
 	check = ft_atoi(line);
 	if (check == 0 && line[0] != '0')
@@ -155,14 +154,16 @@ int	set_pl_vector(t_scene *scene, char *line, int pos)
 		scene->planes[scene->plane_index].normal.y = ft_atoi(line);
 	else
 		scene->planes[scene->plane_index].normal.z = ft_atoi(line);
+	if (check < -1 || check > 1)
+		return (-1);
 	return (1);
 }
 
-int	set_pl_normal(t_scene *scene, char *line, int index)
+int set_pl_normal(t_scene *scene, char *line, int index)
 {
 	int i;
 	int pos;
-	int	res;
+	int res;
 
 	i = index;
 	pos = 1;
@@ -193,9 +194,6 @@ int	set_pl_normal(t_scene *scene, char *line, int index)
 
 int set_plane(char *line, t_scene *scene, int index)
 {
-	// (void)line;
-	// (void)scene;
-	// (void)index;
 	int i;
 	int pos;
 
@@ -221,11 +219,137 @@ int set_plane(char *line, t_scene *scene, int index)
 	return (1);
 }
 
+int set_cy_normal(t_scene *scene, char *line, int pos)
+{
+	// int check;
+
+	// check = ft_atoi(line);
+	// if (check == 0 && line && line[0] != '0')
+	// 	return (-1);
+	if (pos == 1)
+		scene->cylinders[scene->cylinder_index].axis.x = ft_atoi(line);
+	if (pos == 2)
+		scene->cylinders[scene->cylinder_index].axis.y = ft_atoi(line);
+	else
+		scene->cylinders[scene->cylinder_index].axis.z = ft_atoi(line);
+	return (1);
+}
+
+int set_cy_center(t_scene *scene, char *line, int pos)
+{
+	// int check;
+
+	// check = ft_atoi(line);
+	// if (check == 0 && line && line[0] != '0')
+	// 	return (-1);
+	if (pos == 1)
+		scene->cylinders[scene->cylinder_index].center.x = ft_atoi(line);
+	if (pos == 2)
+		scene->cylinders[scene->cylinder_index].center.y = ft_atoi(line);
+	else
+		scene->cylinders[scene->cylinder_index].center.z = ft_atoi(line);
+	// if (check < 1 || check > 1)
+	// 	return (-1);
+	return (1);
+}
+
+int set_cy_height(t_scene *scene, char *line, int index)
+{
+	int i;
+	int res;
+
+	res = 1;
+	while (line[index])
+	{
+		if (is_digit(line[index]))
+		{
+			i = index;
+			while (is_digit(line[i]) || (line[i] == '.' && (is_digit(line[i + 1]))))
+				i++;
+			scene->cylinders[scene->cylinder_index].height = ft_atoi(line + index);
+			index = i;
+			res = parse_color(line, &scene->cylinders[scene->cylinder_index].color, index);
+			break;
+		}
+		else
+			index++;
+	}
+	scene->cylinder_index++;
+	return (res);
+}
+
+int set_cy_diameter(t_scene *scene, char *line, int index)
+{
+	int i;
+
+	while (line[index])
+	{
+		if (is_digit(line[index]))
+		{
+			i = index;
+			while (is_digit(line[i]) || (line[i] == '.' && (is_digit(line[i + 1]))))
+				i++;
+			scene->cylinders[scene->cylinder_index].diameter = ft_atoi(line + index);
+			index = i;
+			return (set_cy_height(scene, line, index));
+		}
+		else
+			index++;
+	}
+	return (1);
+}
+
+int parse_cy_normal(t_scene *scene, char *line, int index)
+{
+	int i;
+	int pos;
+
+	i = index;
+	pos = 1;
+	while (line[index])
+	{
+		if (is_digit(line[index]) || (line[index] == '-' && is_digit(line[index + 1])))
+		{
+			if (pos == 4)
+				return (set_cy_diameter(scene, line, index));
+			i = index;
+			while (is_digit(line[i]) || (line[i] == '.' && (is_digit(line[i + 1]))) || line[i] == '-')
+				i++;
+			if (set_cy_normal(scene, line + index, pos) == -1)
+				return (-1);
+			pos++;
+			index = i;
+		}
+		else
+			index++;
+	}
+	return (1);
+}
+
 int set_cylinder(char *line, t_scene *scene, int index)
 {
-	(void)line;
-	(void)scene;
-	(void)index;
+	int i;
+	int pos;
+
+	i = index;
+	pos = 1;
+	while (line[index])
+	{
+		if (is_digit(line[index]) || (line[index] == '-' && is_digit(line[index + 1])))
+		{
+			if (pos == 4)
+				return (parse_cy_normal(scene, line, index));
+			i = index;
+			while (is_digit(line[i]) || (line[i] == '.' && (is_digit(line[i + 1]))) || line[i] == '-')
+				i++;
+			if (set_cy_center(scene, line + index, pos) == -1)
+				return (-1);
+			pos++;
+			index = i;
+		}
+		else
+			index++;
+	}
 	return (1);
 }
 
@@ -285,6 +409,13 @@ int main(int ac, char **av)
 	printf("plane.normal.y %f\n", scene.planes[1].normal.y);
 	printf("plane.normal.z %f\n", scene.planes[1].normal.z);
 	printf("plane colors: %d, %d, %d\n", scene.planes[0].color.r, scene.planes[0].color.g, scene.planes[0].color.b);
-	
-
+	printf("cyl.center.x %f\n", scene.cylinders[1].center.x);
+	printf("cyl.center.y %f\n", scene.cylinders[1].center.y);
+	printf("cyl.center.z %f\n", scene.cylinders[1].center.z);
+	printf("cyl.normal.x %f\n", scene.cylinders[1].axis.x);
+	printf("cyl.normal.y %f\n", scene.cylinders[1].axis.y);
+	printf("cyl.normal.z %f\n", scene.cylinders[1].axis.z);
+	printf("cyl diameter %f\n", scene.cylinders[1].diameter);
+	printf("cyl height %f\n", scene.cylinders[1].height);
+	printf("cyl colors: %d, %d, %d\n", scene.cylinders[1].color.r, scene.cylinders[1].color.g, scene.cylinders[1].color.b);
 }
