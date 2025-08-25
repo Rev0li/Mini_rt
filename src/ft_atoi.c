@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
+/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 16:58:06 by yassine           #+#    #+#             */
-/*   Updated: 2025/08/22 14:46:15 by yassinefahf      ###   ########.fr       */
+/*   Updated: 2025/08/25 11:11:33 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

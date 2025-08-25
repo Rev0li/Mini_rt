@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
+/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 13:33:36 by yafahfou          #+#    #+#             */
-/*   Updated: 2025/08/22 15:31:01 by yassinefahf      ###   ########.fr       */
+/*   Updated: 2025/08/25 12:28:27 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

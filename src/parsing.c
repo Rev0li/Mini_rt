@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
+/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 13:37:52 by yafahfou          #+#    #+#             */
-/*   Updated: 2025/08/22 16:05:25 by yassinefahf      ###   ########.fr       */
+/*   Updated: 2025/08/25 12:22:41 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int parse_color(char *line, t_color *color, int index)
 
 void set_camera_pos(t_camera *camera, char *line, int pos)
 {
-	// printf("ici\n");
 	if (pos == 1)
 		camera->position.x = ft_atoi(line);
 	else if (pos == 2)
@@ -87,7 +86,6 @@ int set_orientation_values(t_camera *camera, char *line, int pos)
 
 int set_fov_value(t_scene *scene, char *line, int index)
 {
-	// printf("line%s\n", line + index);
 	scene->camera.fov = ft_atoi(line + index);
 	if (scene->camera.fov < 0 || scene->camera.fov > 180)
 		return (-1);

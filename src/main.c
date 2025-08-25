@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
+/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 12:15:04 by yafahfou          #+#    #+#             */
-/*   Updated: 2025/08/24 21:00:55 by yassinefahf      ###   ########.fr       */
+/*   Updated: 2025/08/25 12:36:28 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,21 @@ int set_light(char *line, t_scene *scene, int index)
 	return (-1);
 }
 
-void set_sp_pos(t_scene *scene, char *line, int pos)
+int set_sp_pos(t_scene *scene, char *line, int pos)
 {
+	// int	check;
+
+	// check = ft_atoi(line);
+	// if (check == 0 && line[0] != '0')
+	// 	return (-1);
+	// printf("ici\n");
 	if (pos == 1)
 		scene->spheres[scene->sphere_index].center.x = ft_atoi(line);
 	else if (pos == 2)
 		scene->spheres[scene->sphere_index].center.y = ft_atoi(line);
 	else
 		scene->spheres[scene->sphere_index].center.z = ft_atoi(line);
+	return (1);
 }
 
 int set_sp_diameter(t_scene *scene, char *line, int index)
@@ -73,7 +80,6 @@ int set_sp_diameter(t_scene *scene, char *line, int index)
 	int res;
 
 	res = 1;
-	printf("line %s\n", line + index);
 	while (line[index])
 	{
 		if (is_digit(line[index]))
@@ -109,7 +115,8 @@ int set_sphere(char *line, t_scene *scene, int index)
 			i = index;
 			while (is_digit(line[i]) || (line[i] == '.' && (is_digit(line[i + 1]))) || line[i] == '-')
 				i++;
-			set_sp_pos(scene, line + index, pos);
+			if (set_sp_pos(scene, line + index, pos) == -1)
+				return (-1);
 			pos++;
 			index = i;
 		}
@@ -119,11 +126,98 @@ int set_sphere(char *line, t_scene *scene, int index)
 	return (1);
 }
 
+int	set_pl_point(t_scene *scene, char *line, int pos)
+{
+	int	check;
+
+	check = ft_atoi(line);
+	if (check == 0 && line && line[0] != '0')
+		return (-1);
+	if (pos == 1)
+		scene->planes[scene->plane_index].point.x = ft_atoi(line);
+	else if (pos == 2)
+		scene->planes[scene->plane_index].point.y = ft_atoi(line);
+	else
+		scene->planes[scene->plane_index].point.z = ft_atoi(line);
+	return (1);
+}
+
+int	set_pl_vector(t_scene *scene, char *line, int pos)
+{
+	int	check;
+
+	check = ft_atoi(line);
+	if (check == 0 && line[0] != '0')
+		return (-1);
+	if (pos == 1)
+		scene->planes[scene->plane_index].normal.x = ft_atoi(line);
+	else if (pos == 2)
+		scene->planes[scene->plane_index].normal.y = ft_atoi(line);
+	else
+		scene->planes[scene->plane_index].normal.z = ft_atoi(line);
+	return (1);
+}
+
+int	set_pl_normal(t_scene *scene, char *line, int index)
+{
+	int i;
+	int pos;
+	int	res;
+
+	i = index;
+	pos = 1;
+	res = 1;
+	while (line[index])
+	{
+		if (is_digit(line[index]) || (line[index] == '-' && is_digit(line[index + 1])))
+		{
+			if (pos == 4)
+			{
+				res = parse_color(line, &scene->planes[scene->plane_index].color, index);
+				scene->plane_index++;
+				break;
+			}
+			i = index;
+			while (is_digit(line[i]) || (line[i] == '.' && (is_digit(line[i + 1]))) || line[i] == '-')
+				i++;
+			if (set_pl_vector(scene, line + index, pos) == -1)
+				return (-1);
+			pos++;
+			index = i;
+		}
+		else
+			index++;
+	}
+	return (res);
+}
+
 int set_plane(char *line, t_scene *scene, int index)
 {
-	(void)line;
-	(void)scene;
-	(void)index;
+	// (void)line;
+	// (void)scene;
+	// (void)index;
+	int i;
+	int pos;
+
+	i = index;
+	pos = 1;
+	while (line[index])
+	{
+		if (is_digit(line[index]) || (line[index] == '-' && is_digit(line[index + 1])))
+		{
+			if (pos == 4)
+				return (set_pl_normal(scene, line, index));
+			i = index;
+			while (is_digit(line[i]) || (line[i] == '.' && (is_digit(line[i + 1]))) || line[i] == '-')
+				i++;
+			if (set_pl_point(scene, line + index, pos) == -1)
+				return (-1);
+			pos++;
+			index = i;
+		}
+		else
+			index++;
+	}
 	return (1);
 }
 
@@ -157,7 +251,10 @@ int main(int ac, char **av)
 	if (ac == 2)
 	{
 		if (check_file(av[1], &scene) == -1)
+		{
 			write(2, "Error\n", 6);
+			exit(EXIT_FAILURE);
+		}
 	}
 	else
 		printf("error argument\n");
@@ -180,4 +277,14 @@ int main(int ac, char **av)
 	printf("sphere numb %d\n", scene.nb_spheres);
 	printf("sphere.diameter %f\nr", scene.spheres[0].diameter);
 	printf("colors: %d, %d, %d\n", scene.spheres[2].color.r, scene.spheres[2].color.g, scene.spheres[2].color.b);
+	printf("plane.point.x %f\n", scene.planes[1].point.x);
+	printf("plane.point.y %f\n", scene.planes[1].point.y);
+	printf("plane.point.z %f\n", scene.planes[1].point.z);
+	printf("plane numb %d\n", scene.nb_planes);
+	printf("plane.normal.x %f\n", scene.planes[1].normal.x);
+	printf("plane.normal.y %f\n", scene.planes[1].normal.y);
+	printf("plane.normal.z %f\n", scene.planes[1].normal.z);
+	printf("plane colors: %d, %d, %d\n", scene.planes[0].color.r, scene.planes[0].color.g, scene.planes[0].color.b);
+	
+
 }
