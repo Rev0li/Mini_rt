@@ -16,6 +16,7 @@ SRCS = src/main.c \
 		src/utils/tools_mlx/init_app.c \
 		src/utils/tools_mlx/destroy_hook.c \
 		src/utils/tools_mlx/key_hook.c \
+		src/utils/tools_mlx/mouse_hook.c \
 		\
 		src/math/deg2rad.c \
 		src/math/v_add.c \

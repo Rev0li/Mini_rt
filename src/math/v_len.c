@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 13:59:34 by okientzl          #+#    #+#             */
-/*   Updated: 2025/08/26 14:09:38 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/08/26 14:35:18 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../include/mini_rt.h"

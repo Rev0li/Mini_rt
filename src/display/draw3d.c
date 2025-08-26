@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 13:22:45 by okientzl          #+#    #+#             */
-/*   Updated: 2025/08/26 14:10:52 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/08/26 17:17:00 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../include/mini_rt.h"
@@ -201,6 +201,6 @@ void draw3d(t_mlx *data, t_scene scene)
             put_pixel3d(data, x, y, color);
         }
     }
-    refresh_image(data);
+	mlx_put_image_to_window(data->mlx, data->window, data->img, 0, 0);
 }
 

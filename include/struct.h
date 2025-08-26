@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 12:52:42 by okientzl          #+#    #+#             */
-/*   Updated: 2025/08/21 13:45:43 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/08/26 14:55:17 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_STRUCTS_H
@@ -23,16 +23,7 @@
 #include <limits.h>
 #include <stdio.h>
 
-typedef struct s_mlx
-{
-	void	*mlx;
-	void	*window;
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}	t_mlx;
+
 
 // Structure pour les vecteurs 3D et coordonnées
 typedef struct s_vec3
@@ -115,6 +106,18 @@ typedef struct s_scene
     t_ambient ambient;  // lumière ambiante
     t_light light;      // lumière ponctuelle
 } t_scene;
+
+typedef struct s_mlx
+{
+	void	*mlx;
+	void	*window;
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+	t_scene	scene;
+}	t_mlx;
 
 /*// Structure principale de la scène*/
 /*typedef struct s_scene*/

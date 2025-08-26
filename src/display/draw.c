@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 14:01:28 by okientzl          #+#    #+#             */
-/*   Updated: 2025/08/26 13:58:31 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/08/26 15:24:21 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../include/mini_rt.h"
@@ -364,5 +364,5 @@ void draw(t_mlx *data, t_scene scene)
      * Afficher l'image complète sur la fenêtre
      * (Cette fonction doit copier l'image mémoire vers l'écran)
      */
-    refresh_image(data);
+	mlx_put_image_to_window(data->mlx, data->window, data->img, 0, 0);
 }
