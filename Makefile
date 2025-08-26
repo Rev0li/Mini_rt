@@ -7,12 +7,25 @@ MLX_FLAGS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
 MLX_LIB = $(MLX_DIR)/libmlx.a
 
 SRCS = src/main.c \
-	   src/display/draw.c \
-	   src/display/draw3d.c \
-	   src/utils/ft_calloc.c \
-	   src/utils/tools_mlx/init_app.c \
-	   src/utils/tools_mlx/destroy_hook.c \
-	   src/utils/tools_mlx/key_hook.c
+		\
+		src/display/draw.c \
+		src/display/draw3d.c \
+		\
+		src/utils/ft_calloc.c \
+		\
+		src/utils/tools_mlx/init_app.c \
+		src/utils/tools_mlx/destroy_hook.c \
+		src/utils/tools_mlx/key_hook.c \
+		\
+		src/math/deg2rad.c \
+		src/math/v_add.c \
+		src/math/v_cross.c \
+		src/math/v_dot.c \
+		src/math/v_len.c \
+		src/math/v_norm.c \
+		src/math/v_scale.c \
+		src/math/v_sub.c \
+		src/math/vec3.c
 
 HEADER = include/mini_rt.h	\
 		 include/struct.h

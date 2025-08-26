@@ -13,8 +13,8 @@
 # define MINIRT_STRUCTS_H
 
 
-# define W_HEIGHT 1000
-# define W_WIDTH 2000
+# define W_HEIGHT 1080
+# define W_WIDTH 1920
 
 #include <unistd.h>
 #include <stdlib.h>

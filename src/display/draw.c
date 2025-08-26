@@ -6,117 +6,10 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 14:01:28 by okientzl          #+#    #+#             */
-/*   Updated: 2025/08/21 13:49:17 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/08/26 13:58:31 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../include/mini_rt.h"
-
-#include <math.h>
-#include <stdbool.h>
-
-#ifndef M_PI
-# define M_PI 3.14159265358979323846
-#endif
-
-/*****************************************************************************/
-/*                           OUTILS MATHÉMATIQUES 3D                        */
-/*****************************************************************************/
-
-/*
- * CONSTRUCTEUR DE VECTEUR 3D
- * Crée un vecteur 3D à partir de 3 coordonnées (x, y, z)
- * C'est comme créer un point dans l'espace 3D
- */
-static inline t_vec3 vec3(double x, double y, double z) {
-    return (t_vec3){x, y, z};
-}
-
-/*
- * ADDITION DE VECTEURS
- * Additionne deux vecteurs composante par composante
- * Exemple : vec3(1,2,3) + vec3(4,5,6) = vec3(5,7,9)
- * Géométriquement : "bout à bout", on déplace d'un vecteur puis de l'autre
- */
-static inline t_vec3 v_add(t_vec3 a, t_vec3 b) {
-    return vec3(a.x + b.x, a.y + b.y, a.z + b.z);
-}
-
-/*
- * SOUSTRACTION DE VECTEURS
- * Soustrait le vecteur b du vecteur a
- * Exemple : vec3(5,7,9) - vec3(1,2,3) = vec3(4,5,6)
- * Géométriquement : donne le vecteur qui va de b vers a
- */
-static inline t_vec3 v_sub(t_vec3 a, t_vec3 b) {
-    return vec3(a.x - b.x, a.y - b.y, a.z - b.z);
-}
-
-/*
- * MULTIPLICATION PAR UN SCALAIRE
- * Multiplie chaque composante du vecteur par le même nombre
- * Exemple : vec3(1,2,3) * 2 = vec3(2,4,6)
- * Géométriquement : change la longueur du vecteur (direction identique)
- */
-static inline t_vec3 v_scale(t_vec3 a, double s) {
-    return vec3(a.x * s, a.y * s, a.z * s);
-}
-
-/*
- * PRODUIT SCALAIRE (DOT PRODUCT)
- * Retourne UN NOMBRE (pas un vecteur !)
- * Formule : a.x*b.x + a.y*b.y + a.z*b.z
- * Propriétés importantes :
- * - Si résultat = 0 : les vecteurs sont perpendiculaires
- * - Si résultat > 0 : angle aigu entre les vecteurs
- * - Si résultat < 0 : angle obtus entre les vecteurs
- */
-static inline double v_dot(t_vec3 a, t_vec3 b) {
-    return a.x * b.x + a.y * b.y + a.z * b.z;
-}
-
-/*
- * PRODUIT VECTORIEL (CROSS PRODUCT)
- * Retourne un vecteur perpendiculaire aux deux vecteurs d'entrée
- * Direction donnée par la "règle de la main droite"
- * Utilisé pour calculer des normales de surface ou des bases orthogonales
- */
-static inline t_vec3 v_cross(t_vec3 a, t_vec3 b) {
-    return vec3(
-        a.y * b.z - a.z * b.y,  // composante X
-        a.z * b.x - a.x * b.z,  // composante Y
-        a.x * b.y - a.y * b.x   // composante Z
-    );
-}
-
-/*
- * LONGUEUR (MAGNITUDE) D'UN VECTEUR
- * Calcule la distance de l'origine au point représenté par le vecteur
- * Formule : sqrt(x² + y² + z²) - théorème de Pythagore en 3D
- */
-static inline double v_len(t_vec3 a) {
-    return sqrt(v_dot(a, a));  // Astuce : ||a|| = sqrt(a·a)
-}
-
-/*
- * NORMALISATION D'UN VECTEUR
- * Transforme un vecteur en vecteur de longueur 1 (vecteur unitaire)
- * Garde la même direction mais change la longueur à exactement 1.0
- * Essentiel en ray tracing pour les calculs d'éclairage et les directions
- */
-static inline t_vec3 v_norm(t_vec3 a) {
-    double L = v_len(a);
-    // Protection contre division par zéro : si longueur = 0, retourner le vecteur tel quel
-    return (L > 0.0) ? v_scale(a, 1.0 / L) : a;
-}
-
-/*
- * CONVERSION DEGRÉS VERS RADIANS
- * Les fonctions mathématiques (sin, cos, tan) utilisent les radians
- * Formule : radians = degrés × π/180
- */
-static inline double deg2rad(double d) {
-    return d * (M_PI / 180.0);
-}
 
 /*****************************************************************************/
 /*                    CONSTRUCTION DU RAYON À TRAVERS UN PIXEL              */
@@ -141,11 +34,12 @@ static inline double deg2rad(double d) {
  */
 t_ray calculate_ray(int px, int py, t_camera cam)
 {
-    t_ray ray;
+    t_ray	ray;
+	double	aspect;
     
     // RATIO D'ASPECT : largeur/hauteur de l'écran
     // Important pour éviter la déformation des objets ronds
-    const double aspect = (double)W_WIDTH / (double)W_HEIGHT;
+    aspect = (double)W_WIDTH / (double)W_HEIGHT;
 
     /*
      * CONSTRUCTION DE LA BASE ORTHONORMÉE DE LA CAMÉRA
@@ -384,13 +278,14 @@ t_color ray_color(t_ray ray, t_scene scene)
  */
 void put_pixel(t_mlx *data, int x, int y, int color)
 {
+	int	offset;
     // Vérification des limites : ne pas écrire en dehors de l'image
     if (x < 0 || x >= W_WIDTH || y < 0 || y >= W_HEIGHT)
         return;
     
     // CALCUL DE L'OFFSET DANS LE TABLEAU LINÉAIRE
     // Comme on l'a vu : position = (ligne × taille_ligne) + (colonne × octets_par_pixel)
-    int offset = (y * data->line_length) + (x * (data->bits_per_pixel / 8));
+    offset = (y * data->line_length) + (x * (data->bits_per_pixel / 8));
     
     // ÉCRITURE DIRECTE EN MÉMOIRE
     // On cast vers unsigned int* pour écrire les 4 octets d'un coup
@@ -419,21 +314,30 @@ void draw(t_mlx *data, t_scene scene)
     // DOUBLE BOUCLE : parcourir tous les pixels de l'écran
     // y = lignes (de haut en bas)
     // x = colonnes (de gauche à droite)
-    for (int y = 0; y < W_HEIGHT; y++)
-    {
-        for (int x = 0; x < W_WIDTH; x++)
-        {
+	int		y;
+	int		x;
+	t_ray	ray;
+	t_color	pixel_color;
+	int		color;
+	y = 0;
+	x = 0;
+
+	while (y < W_HEIGHT)
+	{
+		x = 0;
+		while (x < W_WIDTH)
+		{
             /*
              * ÉTAPE 1 : CALCUL DU RAYON
              * Pour ce pixel (x, y), quel rayon part de la caméra ?
              */
-            t_ray ray = calculate_ray(x, y, scene.camera);
+            ray = calculate_ray(x, y, scene.camera);
 
             /*
              * ÉTAPE 2 : INTERSECTION ET COULEUR
              * Ce rayon croise-t-il des objets ? Lesquels ? Quelle couleur ?
              */
-            t_color pixel_color = ray_color(ray, scene);
+            pixel_color = ray_color(ray, scene);
 
             /*
              * ÉTAPE 3 : CONVERSION COULEUR
@@ -443,16 +347,18 @@ void draw(t_mlx *data, t_scene scene)
              * - Vert sur 8 bits décalé de 8 positions (bits 15-8) 
              * - Bleu sur 8 bits (bits 7-0)
              */
-            int color = (pixel_color.r << 16) | (pixel_color.g << 8) | pixel_color.b;
+            color = (pixel_color.r << 16) | (pixel_color.g << 8) | pixel_color.b;
 
             /*
              * ÉTAPE 4 : AFFICHAGE
              * Placer le pixel coloré dans notre image en mémoire
              */
-            put_pixel(data, x, y, color);
-        }
-    }
-    
+            put_pixel(data, x, y, color);    
+			x++;
+		}
+		y++;
+	}
+
     /*
      * ÉTAPE 5 : RAFRAÎCHISSEMENT
      * Afficher l'image complète sur la fenêtre

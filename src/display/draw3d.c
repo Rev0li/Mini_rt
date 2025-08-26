@@ -6,38 +6,10 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 13:22:45 by okientzl          #+#    #+#             */
-/*   Updated: 2025/08/21 13:45:36 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/08/26 14:10:52 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../include/mini_rt.h"
-
-#include <math.h>
-#include <stdbool.h>
-
-#ifndef M_PI
-# define M_PI 3.14159265358979323846
-#endif
-
-/*********************/
-/*  Outils math 3D   */
-/*********************/
-static inline t_vec3 vec3(double x,double y,double z){ return (t_vec3){x,y,z}; }
-
-static inline t_vec3 v_add(t_vec3 a, t_vec3 b){ return vec3(a.x+b.x, a.y+b.y, a.z+b.z); }
-static inline t_vec3 v_sub(t_vec3 a, t_vec3 b){ return vec3(a.x-b.x, a.y-b.y, a.z-b.z); }
-static inline t_vec3 v_scale(t_vec3 a, double s){ return vec3(a.x*s, a.y*s, a.z*s); }
-
-static inline double v_dot(t_vec3 a, t_vec3 b){ return a.x*b.x + a.y*b.y + a.z*b.z; }
-static inline t_vec3  v_cross(t_vec3 a, t_vec3 b){
-    return vec3(a.y*b.z - a.z*b.y, a.z*b.x - a.x*b.z, a.x*b.y - a.y*b.x);
-}
-static inline double v_len(t_vec3 a){ return sqrt(v_dot(a,a)); }
-static inline t_vec3  v_norm(t_vec3 a){
-    double L = v_len(a);
-    return (L > 0.0) ? v_scale(a, 1.0/L) : a;
-}
-
-static inline double deg2rad(double d){ return d * (M_PI/180.0); }
 
 /**********************************************/
 /*  Construction du rayon à travers un pixel  */

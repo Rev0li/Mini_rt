@@ -28,7 +28,7 @@ t_scene init_hardcoded_scene(void)
     // -----------------------------------------------------------------
     // Sphère : centre à (0,0,-5), rayon = 1, couleur rouge
     // -----------------------------------------------------------------
-    scene.sphere.center = (t_vec3){0, 0, -5};
+    scene.sphere.center = (t_vec3){0, 0.5, -5};
     scene.sphere.radius = 1;
     scene.sphere.color  = (t_color){255, 0, 0};
 
