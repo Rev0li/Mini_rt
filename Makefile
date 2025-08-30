@@ -2,7 +2,8 @@ NAME = miniRT
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-MLX_DIR = ./lib/minilibx-linux
+# <<<<<<< HEAD
+# MLX_DIR = ./lib/minilibx-linux
 MLX_FLAGS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
 MLX_LIB = $(MLX_DIR)/libmlx.a
 
@@ -28,20 +29,27 @@ SRCS = src/main.c \
 		src/math/v_scale.c \
 		src/math/v_sub.c \
 		src/math/vec3.c
+=======
+# MLX_DIR = ./lib/minilibx-linux
+# MLX_FLAGS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
+# MLX_LIB = $(MLX_DIR)/libmlx.a
+
+SRCS = src/main.c src/ft_atoi.c src/get_next_line_utils.c src/get_next_line.c src/parsing.c src/parsing2.c src/parsing_utils.c src/utils.c src/ft_calloc.c
+>>>>>>> origin/yassine
 
 HEADER = include/mini_rt.h	\
 		 include/struct.h
 
 all: $(NAME)
 
-$(NAME): $(SRCS) $(MLX_LIB) $(HEADER)
-	$(CC) $(CFLAGS) -Iinclude -I$(MLX_DIR) -o $(NAME) $(SRCS) $(MLX_FLAGS)
+$(NAME): $(SRCS) $(HEADER)
+	$(CC) $(CFLAGS) -Iinclude -o $(NAME) $(SRCS)
 
-$(MLX_LIB):
-	@$(MAKE) -C $(MLX_DIR)
+# $(MLX_LIB):
+# 	@$(MAKE) -C $(MLX_DIR)
 
 clean:
-	@$(MAKE) -C $(MLX_DIR) clean
+	@$(MAKE) -C clean
 
 fclean: clean
 	rm -f $(NAME)

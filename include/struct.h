@@ -13,8 +13,11 @@
 # define MINIRT_STRUCTS_H
 
 
+/*#define W_HEIGHT 1000*/
+/*#define W_WIDTH 1000*/
 # define W_HEIGHT 1080
 # define W_WIDTH 1920
+# define M_PI 3.14159265358979323846
 
 #include <unistd.h>
 #include <stdlib.h>
@@ -98,13 +101,33 @@ typedef struct s_cylinder
 } t_cylinder;
 
 
+// Structure principale de la scène
 typedef struct s_scene
 {
-    t_camera camera;
-    t_sphere sphere;
-    t_plane plane;
-    t_ambient ambient;  // lumière ambiante
-    t_light light;      // lumière ponctuelle
+    // Éléments uniques (définis par une majuscule)
+    t_ambient ambient; // A - obligatoire
+    t_camera camera;   // C - obligatoire
+
+    t_light light; // tableau dynamique
+    int nb_lights;
+
+    // Objets (peut y en avoir plusieurs)
+    t_sphere *spheres; // tableau dynamique
+    int nb_spheres;
+    int sphere_index;
+
+    t_plane *planes; // tableau dynamique
+    int nb_planes;
+    int plane_index;
+
+    t_cylinder *cylinders; // tableau dynamique
+    int nb_cylinders;
+    int cylinder_index;
+
+    // Flags pour vérifier que les éléments obligatoires sont présents
+    bool has_ambient;
+    bool has_camera;
+    bool has_light;
 } t_scene;
 
 typedef struct s_mlx
@@ -118,31 +141,5 @@ typedef struct s_mlx
 	int		endian;
 	t_scene	scene;
 }	t_mlx;
-
-/*// Structure principale de la scène*/
-/*typedef struct s_scene*/
-/*{*/
-/*    // Éléments uniques (définis par une majuscule)*/
-/*    t_ambient ambient;      // A - obligatoire*/
-/*    t_camera camera;        // C - obligatoire*/
-/**/
-/*    t_light light;        // tableau dynamique*/
-/*    int nb_lights;*/
-/**/
-/*    // Objets (peut y en avoir plusieurs)*/
-/*    t_sphere *spheres;      // tableau dynamique*/
-/*    int nb_spheres;*/
-/**/
-/*    t_plane *planes;        // tableau dynamique*/
-/*    int nb_planes;*/
-/**/
-/*    t_cylinder *cylinders;  // tableau dynamique*/
-/*    int nb_cylinders;*/
-/**/
-/*    // Flags pour vérifier que les éléments obligatoires sont présents*/
-/*    bool    has_ambient;*/
-/*    bool    has_camera;*/
-/*    bool    has_light;*/
-/*} t_scene;*/
 
 #endif
