@@ -2,18 +2,31 @@ NAME = miniRT
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-# <<<<<<< HEAD
-# MLX_DIR = ./lib/minilibx-linux
+MLX_DIR = ./lib/minilibx-linux
 MLX_FLAGS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
 MLX_LIB = $(MLX_DIR)/libmlx.a
 
 SRCS = src/main.c \
+		src/parsing/parsing.c \
+		src/parsing/parsing2.c \
+		src/parsing/parsing_utils.c \
 		\
 		src/display/loop.c \
 		src/display/draw.c \
 		src/display/draw3d.c \
 		\
-		src/utils/ft_calloc.c \
+		src/utils/ft_strlen.c \
+		src/utils/ft_is_digit.c \
+		src/utils/exit_error.c \
+		src/utils/open_check.c \
+		\
+		src/utils/convert/ft_atoi.c \
+		src/utils/convert/safe_atonbr.c \
+		\
+		src/utils/get_line/get_next_line.c \
+		src/utils/get_line/get_next_line_utils.c \
+		\
+		src/utils/memory/ft_calloc.c \
 		\
 		src/utils/tools_mlx/init_app.c \
 		src/utils/tools_mlx/destroy_hook.c \
@@ -29,13 +42,6 @@ SRCS = src/main.c \
 		src/math/v_scale.c \
 		src/math/v_sub.c \
 		src/math/vec3.c
-=======
-# MLX_DIR = ./lib/minilibx-linux
-# MLX_FLAGS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
-# MLX_LIB = $(MLX_DIR)/libmlx.a
-
-SRCS = src/main.c src/ft_atoi.c src/get_next_line_utils.c src/get_next_line.c src/parsing.c src/parsing2.c src/parsing_utils.c src/utils.c src/ft_calloc.c
->>>>>>> origin/yassine
 
 HEADER = include/mini_rt.h	\
 		 include/struct.h
@@ -43,7 +49,7 @@ HEADER = include/mini_rt.h	\
 all: $(NAME)
 
 $(NAME): $(SRCS) $(HEADER)
-	$(CC) $(CFLAGS) -Iinclude -o $(NAME) $(SRCS)
+	$(CC) $(CFLAGS) -Iinclude -o $(NAME) $(SRCS) $(MLX_FLAGS)
 
 # $(MLX_LIB):
 # 	@$(MAKE) -C $(MLX_DIR)

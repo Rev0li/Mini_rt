@@ -369,8 +369,10 @@ void prepare_scene(t_scene *scene)
 
 int main(int ac, char **av)
 {
-	t_scene scene;
+	t_scene	scene;
+	t_mlx	*data;
 
+	data = (t_mlx *)ft_calloc(1, sizeof(t_mlx));
 	prepare_scene(&scene);
 	if (ac == 2)
 	{
@@ -379,6 +381,8 @@ int main(int ac, char **av)
 			write(2, "Error\n", 6);
 			exit(EXIT_FAILURE);
 		}
+		data->scene = scene;
+		loop(data);
 	}
 	else
 		printf("error argument\n");

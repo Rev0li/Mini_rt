@@ -107,8 +107,8 @@ static t_color color_add(t_color a, t_color b)
 t_color ray_color3d(t_ray ray, t_scene scene)
 {
     double t_sph, t_pl;
-    bool hit_s = hit_sphere(&scene.sphere, &ray, &t_sph);
-    bool hit_p = hit_plane(&scene.plane,  &ray, &t_pl);
+    bool hit_s = hit_sphere(scene.spheres, &ray, &t_sph);
+    bool hit_p = hit_plane(scene.planes,  &ray, &t_pl);
 
     if (!hit_s && !hit_p)
         return (t_color){0, 0, 0}; // fond noir
@@ -121,14 +121,14 @@ t_color ray_color3d(t_ray ray, t_scene scene)
 
     if (hit_s && (!hit_p || t_sph < t_pl)) {
         t = t_sph;
-        base_color = scene.sphere.color;
+        base_color = scene.spheres->color;
         hit_point = v_add(ray.origin, v_scale(ray.direction, t));
-        normal = v_norm(v_sub(hit_point, scene.sphere.center));
+        normal = v_norm(v_sub(hit_point, scene.spheres->center));
     } else {
         t = t_pl;
-        base_color = scene.plane.color;
+        base_color = scene.planes->color;
         hit_point = v_add(ray.origin, v_scale(ray.direction, t));
-        normal = v_norm(scene.plane.normal);
+        normal = v_norm(scene.planes->normal);
     }
 
     /* --- ÉTAPE 1 : lumière ambiante --- */
@@ -147,13 +147,13 @@ t_color ray_color3d(t_ray ray, t_scene scene)
     double t_tmp;
 
     // Test intersection avec sphère
-    if (hit_sphere(&scene.sphere, &shadow_ray, &t_tmp)) {
+    if (hit_sphere(scene.spheres, &shadow_ray, &t_tmp)) {
         double dist_light = v_len(v_sub(scene.light.position, hit_point));
         if (t_tmp > 0.0 && t_tmp < dist_light)
             in_shadow = true;
     }
     // Test intersection avec plan
-    if (hit_plane(&scene.plane, &shadow_ray, &t_tmp)) {
+    if (hit_plane(scene.planes, &shadow_ray, &t_tmp)) {
         double dist_light = v_len(v_sub(scene.light.position, hit_point));
         if (t_tmp > 0.0 && t_tmp < dist_light)
             in_shadow = true;

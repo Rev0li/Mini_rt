@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 14:01:28 by okientzl          #+#    #+#             */
-/*   Updated: 2025/08/26 15:24:21 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/08/30 16:05:25 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../include/mini_rt.h"
@@ -236,10 +236,10 @@ t_color ray_color(t_ray ray, t_scene scene)
     double t_sph, t_pl;  // Distances des intersections
     
     // Tester l'intersection avec la sphère
-    bool hit_s = hit_sphere(&scene.sphere, &ray, &t_sph);
+    bool hit_s = hit_sphere(scene.spheres, &ray, &t_sph);
     
     // Tester l'intersection avec le plan  
-    bool hit_p = hit_plane(&scene.plane, &ray, &t_pl);
+    bool hit_p = hit_plane(scene.planes, &ray, &t_pl);
 
     // Si aucune intersection : couleur de fond
     if (!hit_s && !hit_p) {
@@ -259,10 +259,10 @@ t_color ray_color(t_ray ray, t_scene scene)
      */
     if (hit_s && (!hit_p || t_sph < t_pl)) {
         // La sphère est plus proche (ou seule intersectée)
-        return scene.sphere.color;
+        return scene.spheres->color;
     } else {
         // Le plan est plus proche (ou seul intersecté)
-        return scene.plane.color;
+        return scene.planes->color;
     }
 }
 

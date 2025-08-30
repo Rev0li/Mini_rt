@@ -1,12 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   open_check.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/21 13:35:39 by yafahfou          #+#    #+#             */
-/*   Updated: 2025/08/30 15:40:50 by okientzl         ###   ########.fr       */
+/*   Created: 2025/08/30 15:40:03 by okientzl          #+#    #+#             */
+/*   Updated: 2025/08/30 15:40:03 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "../../include/mini_rt.h"
 
+void	open_check(int fd)
+{
+	if (fd == -1)
+	{
+		write(2, "Error open\n", 11);
+		exit(EXIT_FAILURE);
+	}
+}

@@ -79,6 +79,7 @@ typedef struct s_sphere
 {
     t_vec3 center;       // coordonnées x,y,z
     double radius;     // > 0
+	double diameter;
     t_color color;       // RGB [0-255]
 } t_sphere;
 
