@@ -8,6 +8,7 @@ MLX_LIB = $(MLX_DIR)/libmlx.a
 
 SRCS = src/main.c \
 		\
+		src/display/loop.c \
 		src/display/draw.c \
 		src/display/draw3d.c \
 		\
