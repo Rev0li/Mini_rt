@@ -6,7 +6,7 @@
 /*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 13:33:36 by yafahfou          #+#    #+#             */
-/*   Updated: 2025/08/25 12:28:27 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/08/26 11:55:04 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,10 @@ int parse_line(char *line, t_scene *scene)
 		else if (line[i] == 'c' && line[i + 1] == 'y')
 			return (set_cylinder(line, scene, i));
 		else if (line[i] && line[i] != ' ' && line[i] != '\n')
+		{
+			printf("line[i] %c\n, index: %d\n", line[i], i);
 			exit_error("Error parsing file\n");
+		}
 		i++;
 	}
 	return (1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_rt.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
+/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 12:01:50 by yafahfou          #+#    #+#             */
-/*   Updated: 2025/08/22 16:00:29 by yassinefahf      ###   ########.fr       */
+/*   Updated: 2025/09/04 15:16:39 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 #include <stdbool.h>
 #include <limits.h>
 #include <stdio.h>
+#include "../lib/minilibx-linux/mlx.h"
 
 typedef struct s_mlx
 {
@@ -32,6 +33,9 @@ typedef struct s_mlx
     int bits_per_pixel;
     int line_length;
     int endian;
+	int	height;
+	int	width;
+
 } t_mlx;
 
 // Structure pour les vecteurs 3D et coordonnées
@@ -99,6 +103,12 @@ typedef struct s_cylinder
     t_color color;   // RGB [0-255]
 } t_cylinder;
 
+typedef struct s_ray
+{
+    t_vec3  origin;
+    t_vec3  direction;
+} t_ray;
+
 // Structure principale de la scène
 typedef struct s_scene
 {
@@ -154,5 +164,9 @@ void exit_error(char *message);
 int set_ambient_ratio(char *line, t_scene *scene, int index);
 void get_data_from_file(char *file, t_scene *scene);
 void *ft_calloc(size_t nmemb, size_t size);
+void refresh_image(t_mlx *data);
+int	key_hook(int keycode, t_mlx *data);
+bool	init_app(t_mlx *data);
+int	destroy_hook(void *param);
 
 #endif
