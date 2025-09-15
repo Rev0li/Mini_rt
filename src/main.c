@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 12:15:04 by yafahfou          #+#    #+#             */
-/*   Updated: 2025/09/04 15:24:33 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/09/15 18:41:16 by yassinefahf      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -369,21 +369,55 @@ void prepare_scene(t_scene *scene)
 
 t_ray create_test_ray(void)
 {
-	t_ray	ray;
+	t_ray ray;
 
 	ray.origin = (t_vec3){0.0, 0.0, 0.0};
 	ray.direction = (t_vec3){0.0, 0.0, -1.0};
 	return (ray);
 }
 
-void	test_ray_display(t_mlx *data)
+void set_vec(t_vec3 *vec1, double x, double y, double z)
 {
-	int	x;
-	int	y;
-	t_ray	ray;
+	vec1->x = x;
+	vec1->y = y;
+	vec1->z = z;
+}
 
+t_ray create_ray_from_pixel(int x, int y, t_camera *cam, t_mlx *data)
+{
+	t_ray ray;
+	float aspect_ratio;
+	float rad_fov;
+	double new_x;
+	double new_y;
+	t_vec3 forward;
+	t_vec3 fake_up;
+	t_vec3 up;
+	t_vec3 right;
 
-	ray = create_test_ray();
+	new_x = 2 * (x / (double)data->width) - 1;
+	new_y = -(2 * (y / (double)data->height) - 1);
+	aspect_ratio = (float)data->width / (float)data->height;
+	rad_fov = cam->fov * (M_PI / 180);
+	new_x = (new_x * aspect_ratio) * tan(rad_fov / 2);
+	new_y = new_y * tan(rad_fov / 2);
+	set_vec(&forward, cam->orientation.x, cam->orientation.y, cam->orientation.z);
+	forward = vec_normalize(forward);
+	set_vec(&fake_up, 0, 1, 0);
+	right = vec_normalize(vec_cross(forward, fake_up));
+	up = vec_cross(forward, right);
+	set_vec(&ray.origin, cam->position.x, cam->position.y, cam->position.z);
+	ray.direction = vec_add(vec_add(vec_scale(right, new_x), vec_scale(up, new_y)), forward);
+	return (ray);
+}
+
+void test_ray_display(t_mlx *data, t_scene scene)
+{
+	int x;
+	int y;
+	t_ray ray;
+
+	(void)ray;
 	printf("Rayon créé:\n");
 	y = 0;
 	while (y < data->height)
@@ -396,12 +430,21 @@ void	test_ray_display(t_mlx *data)
 		}
 		y++;
 	}
+	scene.camera.position.x = 0;
+	scene.camera.position.y = 0;
+	scene.camera.position.z = 0;
+	scene.camera.orientation.x = 0;
+	scene.camera.orientation.y = 0;
+	scene.camera.orientation.z = -1;
+	scene.camera.fov = 90;
+	ray = create_ray_from_pixel(500, 500, &scene.camera, data);
+	printf("ray: %f , %f, %f\n", ray.direction.x, ray.direction.y, ray.direction.z);
 }
 
 int main(int ac, char **av)
 {
 	t_scene scene;
-	t_mlx	data;
+	t_mlx data;
 
 	prepare_scene(&scene);
 	if (ac == 2)
@@ -413,7 +456,7 @@ int main(int ac, char **av)
 		}
 		if (init_app(&data))
 		{
-			test_ray_display(&data);
+			test_ray_display(&data, scene);
 			// draw(data, scene);
 			/*draw3d(data, scene);*/
 			mlx_hook(data.window, 2, 1L << 0, key_hook, &data);
@@ -423,40 +466,40 @@ int main(int ac, char **av)
 	}
 	else
 		printf("error argument\n");
-// 	printf("ratio %f\n", scene.ambient.ratio);
-// 	printf("colors: %d, %d, %d\n", scene.ambient.color.r, scene.ambient.color.g, scene.ambient.color.b);
-// 	printf("camera.fov: %f\n", scene.camera.fov);
-// 	printf("camera.position.x: %f\n", scene.camera.position.x);
-// 	printf("camera.position.y: %f\n", scene.camera.position.y);
-// 	printf("camera.position.z: %f\n", scene.camera.position.z);
-// 	printf("camera.orientation.x: %f\n", scene.camera.orientation.x);
-// 	printf("camera.orientation.y: %f\n", scene.camera.orientation.y);
-// 	printf("camera.orientation.z: %f\n", scene.camera.orientation.z);
-// 	printf("light.position.x %f\n", scene.light.position.x);
-// 	printf("light.position.y %f\n", scene.light.position.y);
-// 	printf("light.position.z %f\n", scene.light.position.z);
-// 	printf("camera.light.brightness %f\n", scene.light.brightness);
-// 	printf("sphere.center.x %f\n", scene.spheres[0].center.x);
-// 	printf("sphere.center.y %f\n", scene.spheres[0].center.y);
-// 	printf("sphere.center.z %f\n", scene.spheres[0].center.z);
-// 	printf("sphere numb %d\n", scene.nb_spheres);
-// 	printf("sphere.diameter %f\nr", scene.spheres[0].diameter);
-// 	printf("colors: %d, %d, %d\n", scene.spheres[2].color.r, scene.spheres[2].color.g, scene.spheres[2].color.b);
-// 	printf("plane.point.x %f\n", scene.planes[1].point.x);
-// 	printf("plane.point.y %f\n", scene.planes[1].point.y);
-// 	printf("plane.point.z %f\n", scene.planes[1].point.z);
-// 	printf("plane numb %d\n", scene.nb_planes);
-// 	printf("plane.normal.x %f\n", scene.planes[1].normal.x);
-// 	printf("plane.normal.y %f\n", scene.planes[1].normal.y);
-// 	printf("plane.normal.z %f\n", scene.planes[1].normal.z);
-// 	printf("plane colors: %d, %d, %d\n", scene.planes[0].color.r, scene.planes[0].color.g, scene.planes[0].color.b);
-// 	printf("cyl.center.x %f\n", scene.cylinders[1].center.x);
-// 	printf("cyl.center.y %f\n", scene.cylinders[1].center.y);
-// 	printf("cyl.center.z %f\n", scene.cylinders[1].center.z);
-// 	printf("cyl.normal.x %f\n", scene.cylinders[1].axis.x);
-// 	printf("cyl.normal.y %f\n", scene.cylinders[1].axis.y);
-// 	printf("cyl.normal.z %f\n", scene.cylinders[1].axis.z);
-// 	printf("cyl diameter %f\n", scene.cylinders[1].diameter);
-// 	printf("cyl height %f\n", scene.cylinders[1].height);
-// 	printf("cyl colors: %d, %d, %d\n", scene.cylinders[1].color.r, scene.cylinders[1].color.g, scene.cylinders[1].color.b);
+	// 	printf("ratio %f\n", scene.ambient.ratio);
+	// 	printf("colors: %d, %d, %d\n", scene.ambient.color.r, scene.ambient.color.g, scene.ambient.color.b);
+	// 	printf("camera.fov: %f\n", scene.camera.fov);
+	// 	printf("camera.position.x: %f\n", scene.camera.position.x);
+	// 	printf("camera.position.y: %f\n", scene.camera.position.y);
+	// 	printf("camera.position.z: %f\n", scene.camera.position.z);
+	// 	printf("camera.orientation.x: %f\n", scene.camera.orientation.x);
+	// 	printf("camera.orientation.y: %f\n", scene.camera.orientation.y);
+	// 	printf("camera.orientation.z: %f\n", scene.camera.orientation.z);
+	// 	printf("light.position.x %f\n", scene.light.position.x);
+	// 	printf("light.position.y %f\n", scene.light.position.y);
+	// 	printf("light.position.z %f\n", scene.light.position.z);
+	// 	printf("camera.light.brightness %f\n", scene.light.brightness);
+	// 	printf("sphere.center.x %f\n", scene.spheres[0].center.x);
+	// 	printf("sphere.center.y %f\n", scene.spheres[0].center.y);
+	// 	printf("sphere.center.z %f\n", scene.spheres[0].center.z);
+	// 	printf("sphere numb %d\n", scene.nb_spheres);
+	// 	printf("sphere.diameter %f\nr", scene.spheres[0].diameter);
+	// 	printf("colors: %d, %d, %d\n", scene.spheres[2].color.r, scene.spheres[2].color.g, scene.spheres[2].color.b);
+	// 	printf("plane.point.x %f\n", scene.planes[1].point.x);
+	// 	printf("plane.point.y %f\n", scene.planes[1].point.y);
+	// 	printf("plane.point.z %f\n", scene.planes[1].point.z);
+	// 	printf("plane numb %d\n", scene.nb_planes);
+	// 	printf("plane.normal.x %f\n", scene.planes[1].normal.x);
+	// 	printf("plane.normal.y %f\n", scene.planes[1].normal.y);
+	// 	printf("plane.normal.z %f\n", scene.planes[1].normal.z);
+	// 	printf("plane colors: %d, %d, %d\n", scene.planes[0].color.r, scene.planes[0].color.g, scene.planes[0].color.b);
+	// 	printf("cyl.center.x %f\n", scene.cylinders[1].center.x);
+	// 	printf("cyl.center.y %f\n", scene.cylinders[1].center.y);
+	// 	printf("cyl.center.z %f\n", scene.cylinders[1].center.z);
+	// 	printf("cyl.normal.x %f\n", scene.cylinders[1].axis.x);
+	// 	printf("cyl.normal.y %f\n", scene.cylinders[1].axis.y);
+	// 	printf("cyl.normal.z %f\n", scene.cylinders[1].axis.z);
+	// 	printf("cyl diameter %f\n", scene.cylinders[1].diameter);
+	// 	printf("cyl height %f\n", scene.cylinders[1].height);
+	// 	printf("cyl colors: %d, %d, %d\n", scene.cylinders[1].color.r, scene.cylinders[1].color.g, scene.cylinders[1].color.b);
 }
