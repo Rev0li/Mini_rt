@@ -15,8 +15,8 @@ int	loop(t_mlx *data)
 {
 		if (init_app(data))
 		{
-			draw(data, data->scene);
-			/*draw3d(data, data->scene);*/
+			/*draw(data, data->scene);*/
+			draw3d(data, data->scene);
 			mlx_hook(data->window, 2, 1L << 0, key_hook, data);
 			mlx_hook(data->window, 4, 1L << 2, mouse_hook, data);
 			mlx_loop(data->mlx);

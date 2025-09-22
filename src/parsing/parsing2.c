@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/mini_rt.h"
+#include "../../include/mini_rt.h"
 
 int set_cam_orientation(t_scene *scene, char *line, int index)
 {

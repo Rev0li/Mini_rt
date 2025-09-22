@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/mini_rt.h"
+#include "../../include/mini_rt.h"
 
 int set_color(t_color *color, int n, int choose)
 {

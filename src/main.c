@@ -367,25 +367,8 @@ void prepare_scene(t_scene *scene)
 	scene->cylinder_index = 0;
 }
 
-int main(int ac, char **av)
-{
-	t_scene	scene;
-	t_mlx	*data;
-
-	data = (t_mlx *)ft_calloc(1, sizeof(t_mlx));
-	prepare_scene(&scene);
-	if (ac == 2)
-	{
-		if (check_file(av[1], &scene) == -1)
-		{
-			write(2, "Error\n", 6);
-			exit(EXIT_FAILURE);
-		}
-		data->scene = scene;
-		loop(data);
-	}
-	else
-		printf("error argument\n");
+void	print_data(t_scene	scene)
+{	
 	printf("ratio %f\n", scene.ambient.ratio);
 	printf("colors: %d, %d, %d\n", scene.ambient.color.r, scene.ambient.color.g, scene.ambient.color.b);
 	printf("camera.fov: %f\n", scene.camera.fov);
@@ -423,3 +406,26 @@ int main(int ac, char **av)
 	printf("cyl height %f\n", scene.cylinders[1].height);
 	printf("cyl colors: %d, %d, %d\n", scene.cylinders[1].color.r, scene.cylinders[1].color.g, scene.cylinders[1].color.b);
 }
+
+int main(int ac, char **av)
+{
+	t_scene	scene;
+	t_mlx	*data;
+
+	data = (t_mlx *)ft_calloc(1, sizeof(t_mlx));
+	prepare_scene(&scene);
+	if (ac == 2)
+	{
+		if (check_file(av[1], &scene) == -1)
+		{
+			write(2, "Error\n", 6);
+			exit(EXIT_FAILURE);
+		}
+		data->scene = scene;
+		print_data(data->scene);
+		loop(data);
+	}
+	else
+		printf("error argument\n");
+}
+

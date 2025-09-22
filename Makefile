@@ -48,14 +48,14 @@ HEADER = include/mini_rt.h	\
 
 all: $(NAME)
 
-$(NAME): $(SRCS) $(HEADER)
+$(NAME): $(SRCS) $(HEADER) $(MLX_LIB)
 	$(CC) $(CFLAGS) -Iinclude -o $(NAME) $(SRCS) $(MLX_FLAGS)
 
-# $(MLX_LIB):
-# 	@$(MAKE) -C $(MLX_DIR)
+$(MLX_LIB): 
+	@$(MAKE) -C $(MLX_DIR)
 
 clean:
-	@$(MAKE) -C clean
+	@$(MAKE) -C $(MLX_DIR) clean
 
 fclean: clean
 	rm -f $(NAME)
@@ -63,3 +63,4 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
+

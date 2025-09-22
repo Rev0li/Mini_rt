@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/mini_rt.h"
+#include "../../include/mini_rt.h"
 
 int check_file(char *file, t_scene *scene)
 {
@@ -65,10 +65,10 @@ int parse_line(char *line, t_scene *scene)
 				return (-1);
 			return (set_camera(line, scene, i));
 		}
-		else if (line[i] == 'L')
+		else if (line[i] == 'L' || line[i] == 'l')
 		{
-			if (scene->has_light == true)
-				return (-1);
+			/*if (scene->has_light == true)*/
+			/*	return (-1);*/
 			return (set_light(line, scene, i));
 		}
 		else if (line[i] == 's' && line[i + 1] == 'p')
