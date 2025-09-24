@@ -9,7 +9,7 @@
 /*   Updated: 2025/08/26 18:35:58 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../../include/mini_rt.h"
+#include "mini_rt.h"
 
 int	mouse_hook(int	keycode,int x, int y, t_mlx *data)
 {

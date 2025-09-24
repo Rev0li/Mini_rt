@@ -1,47 +1,61 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   camera_set.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 13:37:52 by yafahfou          #+#    #+#             */
-/*   Updated: 2025/08/25 12:22:41 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/09/24 12:02:44 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "mini_rt.h"
 
-#include "../../include/mini_rt.h"
-
-int set_color(t_color *color, int n, int choose)
-{
-	if (n < 0 || n > 255)
-		return (-1);
-	if (choose == 1)
-		color->r = n;
-	else if (choose == 2)
-		color->g = n;
-	else
-		color->b = n;
-	return (1);
-}
-
-int parse_color(char *line, t_color *color, int index)
+int set_camera(char *line, t_scene *scene, int index)
 {
 	int i;
-	int option;
+	int pos;
 
-	option = 1;
 	i = index;
+	pos = 1;
+	scene->has_camera = true;
 	while (line[index])
 	{
 		if (is_digit(line[index]))
 		{
+			if (pos == 4)
+				return (set_cam_orientation(scene, line, index));
 			i = index;
-			while (is_digit(line[i]))
+			while (is_digit(line[i]) || (line[i] == '.' && (is_digit(line[i + 1]))))
 				i++;
-			if (set_color(color, ft_atoi(line + index), option) == -1)
-				return (-1);
-			option++;
+			set_camera_pos(&scene->camera, line + index, pos);
+			pos++;
+			index = i;
+		}
+		else
+			index++;
+	}
+	return (-1);
+}
+
+int set_cam_orientation(t_scene *scene, char *line, int index)
+{
+	int i;
+	int pos;
+
+	i = index;
+	pos = 1;
+	while (line[index])
+	{
+		if (is_digit(line[index]))
+		{
+			if (pos == 4)
+				return (set_fov_value(scene, line, index));
+			i = index;
+			while (is_digit(line[i]) || (line[i] == '.' && (is_digit(line[i + 1]))))
+				i++;
+			set_orientation_values(&scene->camera, line + index, pos);
+			pos++;
 			index = i;
 		}
 		else

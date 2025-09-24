@@ -9,8 +9,7 @@
 /*   Updated: 2025/08/25 11:11:33 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "../include/mini_rt.h"
+#include "mini_rt.h"
 
 double to_double(double total, int sign, const char *str)
 {

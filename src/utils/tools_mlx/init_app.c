@@ -6,10 +6,10 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 17:00:58 by okientzl          #+#    #+#             */
-/*   Updated: 2025/08/26 16:22:45 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/09/24 15:01:01 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../../include/mini_rt.h"
+#include "mini_rt.h"
 
 static bool	init_img(t_mlx *data)
 {
@@ -31,6 +31,8 @@ static bool	init_img(t_mlx *data)
 
 bool	init_app(t_mlx *data)
 {
+	data->height = W_HEIGHT;
+	data->width = W_WIDTH;
 	data->mlx = mlx_init();
 	if (!data->mlx)
 	{

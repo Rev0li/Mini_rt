@@ -9,8 +9,7 @@
 /*   Updated: 2025/08/19 14:08:23 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "../include/mini_rt.h"
+#include "mini_rt.h"
 
 char	*ft_strjoin_check(char *s1, char *s2)
 {

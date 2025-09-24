@@ -9,8 +9,7 @@
 /*   Updated: 2025/08/19 14:07:51 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "../include/mini_rt.h"
+#include "mini_rt.h"
 
 char	*ft_strjoin_gnl(char const *s1, char const *s2, int index)
 {

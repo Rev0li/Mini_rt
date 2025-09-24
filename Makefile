@@ -3,17 +3,26 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
 MLX_DIR = ./lib/minilibx-linux
+# MLX_DIR = ./lib/minilibx-macos
 MLX_FLAGS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
 MLX_LIB = $(MLX_DIR)/libmlx.a
 
 SRCS = src/main.c \
-		src/parsing/parsing.c \
-		src/parsing/parsing2.c \
-		src/parsing/parsing_utils.c \
+	   src/debug.c \
+		\
+		src/parsing/scene_set/ambiant_set.c \
+		src/parsing/scene_set/camera_set.c \
+		src/parsing/scene_set/color_set.c \
+		src/parsing/scene_set/light_set.c \
+		src/parsing/scene_set/sphere_set.c \
+		src/parsing/scene_set/cylinder_set.c \
+		src/parsing/scene_set/plane_set.c \
+		\
+		src/parsing/verification/check_file.c \
+		src/parsing/verification/get_set_data.c \
 		\
 		src/display/loop.c \
 		src/display/draw.c \
-		src/display/draw3d.c \
 		\
 		src/utils/ft_strlen.c \
 		src/utils/ft_is_digit.c \
@@ -41,7 +50,7 @@ SRCS = src/main.c \
 		src/math/v_norm.c \
 		src/math/v_scale.c \
 		src/math/v_sub.c \
-		src/math/vec3.c
+		src/math/set_vec.c
 
 HEADER = include/mini_rt.h	\
 		 include/struct.h

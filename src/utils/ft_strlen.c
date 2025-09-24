@@ -9,7 +9,7 @@
 /*   Updated: 2025/08/30 15:39:37 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../include/mini_rt.h"
+#include "mini_rt.h"
 
 int	ft_strlen(const char *str)
 {

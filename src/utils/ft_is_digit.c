@@ -9,7 +9,7 @@
 /*   Updated: 2025/08/30 15:40:42 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../include/mini_rt.h"
+#include "mini_rt.h"
 
 int	is_digit(char c)
 {

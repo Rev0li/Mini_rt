@@ -9,7 +9,7 @@
 /*   Updated: 2025/08/30 15:40:29 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../include/mini_rt.h"
+#include "mini_rt.h"
 
 void	exit_error(char *message)
 {

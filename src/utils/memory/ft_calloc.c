@@ -9,8 +9,7 @@
 /*   Updated: 2025/08/22 15:06:08 by yassinefahf      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "../include/mini_rt.h"
+#include "mini_rt.h"
 
 void *ft_calloc(size_t nmemb, size_t size)
 {

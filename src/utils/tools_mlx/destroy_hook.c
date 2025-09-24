@@ -6,10 +6,10 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:15:06 by okientzl          #+#    #+#             */
-/*   Updated: 2025/08/19 16:28:01 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/09/24 12:26:38 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../../include/mini_rt.h"
+#include "mini_rt.h"
 
 static void	free_data(t_mlx *data)
 {
