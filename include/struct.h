@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 12:52:42 by okientzl          #+#    #+#             */
-/*   Updated: 2025/09/24 11:20:22 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/09/27 16:23:21 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_STRUCTS_H
@@ -89,6 +89,11 @@ typedef struct s_cylinder
     t_color color;
 } t_cylinder;
 
+typedef struct s_hit_object
+{
+	void *	object;
+	float	dist;
+} t_hit_objet;
 
 typedef struct s_scene
 {

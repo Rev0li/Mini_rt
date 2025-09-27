@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 13:08:33 by okientzl          #+#    #+#             */
-/*   Updated: 2025/09/24 14:57:39 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/09/27 16:23:23 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../lib/minilibx-linux/mlx.h"
@@ -45,8 +45,16 @@ int		mouse_hook(int	keycode,int x, int y, t_mlx *data);
 int		destroy_hook(void *param);
 //___________________________________________
 // ◈◈◈◈◈◈◈◈ display ◈◈◈◈◈◈◈◈
+t_ray	create_ray_from_pixel(int x, int y, t_camera *cam, t_mlx *data);
+void	put_pixel(t_mlx *data, int x, int y, unsigned int pixel_color);
 int		loop(t_mlx *data);
 void	draw(t_mlx	*data);
+// ----- sphere -----
+void	hit_sphere(t_sphere sphere, t_ray *ray, t_hit_objet *obj);
+// ----- plane -----
+void	hit_plane(t_plane plane, t_ray *ray, t_hit_objet *obj);
+// ----- cylinder -----
+// void	hit_cylinder(t_cylinder cylinder, t_ray *ray, float *dist);
 //___________________________________________
 // ◈◈◈◈◈◈◈◈ math ◈◈◈◈◈◈◈◈
 t_vec3	set_vec(double x, double y, double z);

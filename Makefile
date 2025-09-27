@@ -21,8 +21,16 @@ SRCS = src/main.c \
 		src/parsing/verification/check_file.c \
 		src/parsing/verification/get_set_data.c \
 		\
+		src/display/create_ray_from_pixel.c \
+		src/display/put_pixel.c \
 		src/display/loop.c \
 		src/display/draw.c \
+		\
+		src/display/plane/hit_plane.c \
+		\
+		src/display/cylinder/hit_cylinder.c \
+		\
+		src/display/sphere/hit_sphere.c \
 		\
 		src/utils/ft_strlen.c \
 		src/utils/ft_is_digit.c \
