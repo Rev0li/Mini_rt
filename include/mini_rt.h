@@ -50,9 +50,9 @@ void	put_pixel(t_mlx *data, int x, int y, unsigned int pixel_color);
 int		loop(t_mlx *data);
 void	draw(t_mlx	*data);
 // ----- sphere -----
-void	hit_sphere(t_sphere sphere, t_ray *ray, t_hit_objet *obj);
+void	hit_sphere(t_sphere *sphere, t_ray *ray, t_hit_objet *obj, int	nb_sphere);
 // ----- plane -----
-void	hit_plane(t_plane plane, t_ray *ray, t_hit_objet *obj);
+// void	hit_plane(t_plane plane, t_ray *ray, t_hit_objet *obj);
 // ----- cylinder -----
 // void	hit_cylinder(t_cylinder cylinder, t_ray *ray, float *dist);
 //___________________________________________

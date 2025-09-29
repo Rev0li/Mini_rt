@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "mini_rt.h"
 
-void	hit_sphere(t_sphere sphere, t_ray *ray, t_hit_objet *obj)
+void	hit_sphere(t_sphere *sphere, t_ray *ray, t_hit_objet *obj, int	nb_sphere)
 {
 	float	t1;
 	float	t2;
@@ -20,23 +20,32 @@ void	hit_sphere(t_sphere sphere, t_ray *ray, t_hit_objet *obj)
 	float	c;
 	t_vec3	oc;
 	float	discriminant;
+	int		i;
 
-	oc = v_sub(ray->origin, sphere.center);
-	a = v_dot(ray->direction, ray->direction);
-	b = 2 * v_dot(oc, ray->direction);
-	c = v_dot(oc, oc) - ((sphere.diameter / 2) * (sphere.diameter / 2));
-	discriminant = (b * b) - (4 * (a * c));
-	if (discriminant < 0)
-		return ;
-	else
+	i = 0;
+	while (i < nb_sphere)
 	{
-		obj->object = &sphere;
-		t1 = ((-b + sqrt(discriminant)) / (2*a));
-		t2 = ((-b - sqrt(discriminant)) / (2*a));
-		if (t1 < t2)
-			obj->dist = t1;
-		else
-			obj->dist = t2;
+		oc = v_sub(ray->origin, sphere[i].center);
+		a = v_dot(ray->direction, ray->direction);
+		b = 2 * v_dot(oc, ray->direction);
+		c = v_dot(oc, oc) - ((sphere[i].diameter / 2) * (sphere[i].diameter / 2));
+		discriminant = (b * b) - (4 * (a * c));
+		if (discriminant > 0)
+		{
+			t1 = ((-b + sqrt(discriminant)) / (2*a));
+			t2 = ((-b - sqrt(discriminant)) / (2*a));
+			if (t2 > 0 || t2 < obj->dist)
+			{
+					obj->object.sphere = &sphere[i];
+					obj->dist = t2;
+			}
+			else if (t1 > 0 || t1 < obj->dist)
+			{
+					obj->object.sphere = &sphere[i];
+					obj->dist = t1;
+			}		
+		}
+		i++;
 	}
 	return ;
 }
