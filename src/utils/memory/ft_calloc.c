@@ -6,15 +6,15 @@
 /*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 14:14:28 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/08/22 15:06:08 by yassinefahf      ###   ########.fr       */
+/*   Updated: 2025/09/29 18:23:56 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "mini_rt.h"
 
-void *ft_calloc(size_t nmemb, size_t size)
+void	*ft_calloc(size_t nmemb, size_t size)
 {
-	void *dest;
-	size_t i;
+	void	*dest;
+	size_t	i;
 
 	if (size != 0 && nmemb > __SIZE_MAX__ / size)
 		return (NULL);

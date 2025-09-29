@@ -11,25 +11,28 @@
 /* ************************************************************************** */
 #include "mini_rt.h"
 
-// void	hit_plane(t_plane plane, t_ray *ray, t_hit_objet *obj)
-// {
-// 	float	prod_scalaire;
-// 	float	t;
-// 	float	position;
-// 	float	num;
-//
-// 	prod_scalaire = v_dot(ray->direction, plane.normal);
-// 	if (fabs(prod_scalaire) < 0)
-// 		return ;
-// 	position = v_dot(plane.normal, plane.point);
-// 	num = position - v_dot(ray->origin, plane.normal);
-// 	t = num / prod_scalaire;
-// 	if (t < 0) //1e-6
-// 		return ;
-// 	if (t < obj->dist)
-// 	{
-// 		obj->object = &plane;
-// 		obj->dist = t;
-// 	}
-// 	return ;
-// }
+void	hit_plane(t_plane *plane, t_ray *ray, t_hit_objet *obj, int nb_planes)
+{
+	t_var_plane	var;
+	int		i;
+
+	i = 0;
+	while (i < nb_planes)
+	{
+		var.prod_scalaire = v_dot(ray->direction, plane[i].normal);
+		if (fabs(var.prod_scalaire) > 1e-6)
+		{
+			var.position = v_dot(plane[i].normal, plane[i].point);
+			var.num = var.position - v_dot(ray->origin, plane[i].normal);
+			var.t = var.num / var.prod_scalaire;
+			if (var.t > 0 && var.t < obj->dist)
+			{
+				obj->index = i;
+				obj->dist = var.t;
+				obj->form = PLANE;
+			}
+		}
+		i++;
+	}
+	return ;
+}

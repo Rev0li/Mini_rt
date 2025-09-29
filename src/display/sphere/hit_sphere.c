@@ -11,39 +11,42 @@
 /* ************************************************************************** */
 #include "mini_rt.h"
 
-void	hit_sphere(t_sphere *sphere, t_ray *ray, t_hit_objet *obj, int	nb_sphere)
+void	assign_dist(t_var_sphere var, t_hit_objet *obj, int i)
 {
-	float	t1;
-	float	t2;
-	float	a;
-	float	b;
-	float	c;
-	t_vec3	oc;
-	float	discriminant;
+	
+			var.t1 = ((-var.b + sqrt(var.discriminant)) / (2*var.a));
+			var.t2 = ((-var.b - sqrt(var.discriminant)) / (2*var.a));
+			if (var.t2 > 0 && var.t2 < obj->dist)
+			{
+					obj->index = i;
+					obj->dist = var.t2;
+					obj->form = SPHERE;
+			}
+			else if (var.t1 > 0 && var.t1 < obj->dist)
+			{
+					obj->index = i;
+					obj->dist = var.t1;
+					obj->form = SPHERE;
+			}		
+}
+
+void	hit_sphere(t_sphere *sphere, t_ray *ray, t_hit_objet *obj, int	nb_spheres)
+{
+	t_var_sphere	var;
 	int		i;
 
 	i = 0;
-	while (i < nb_sphere)
+	while (i < nb_spheres)
 	{
-		oc = v_sub(ray->origin, sphere[i].center);
-		a = v_dot(ray->direction, ray->direction);
-		b = 2 * v_dot(oc, ray->direction);
-		c = v_dot(oc, oc) - ((sphere[i].diameter / 2) * (sphere[i].diameter / 2));
-		discriminant = (b * b) - (4 * (a * c));
-		if (discriminant > 0)
+		sphere[i].radius = sphere[i].diameter / 2;
+		var.oc = v_sub(ray->origin, sphere[i].center);
+		var.a = v_dot(ray->direction, ray->direction);
+		var.b = 2 * v_dot(var.oc, ray->direction);
+		var.c = v_dot(var.oc, var.oc) - (sphere[i].radius * sphere[i].radius);
+		var.discriminant = (var.b * var.b) - (4 * (var.a * var.c));
+		if (var.discriminant > 0)
 		{
-			t1 = ((-b + sqrt(discriminant)) / (2*a));
-			t2 = ((-b - sqrt(discriminant)) / (2*a));
-			if (t2 > 0 || t2 < obj->dist)
-			{
-					obj->object.sphere = &sphere[i];
-					obj->dist = t2;
-			}
-			else if (t1 > 0 || t1 < obj->dist)
-			{
-					obj->object.sphere = &sphere[i];
-					obj->dist = t1;
-			}		
+			assign_dist(var, obj, i);
 		}
 		i++;
 	}

@@ -16,12 +16,11 @@ t_hit_objet	hit_object(t_ray ray, t_scene scene)
 	t_hit_objet		obj;
 
 	obj.dist = INFINITY;
-	// hit_plane(scene.planes[0], &ray, &obj);
+	hit_plane(scene.planes, &ray, &obj, scene.nb_planes);
 	hit_sphere(scene.spheres, &ray, &obj, scene.nb_spheres);
-	// hit_cylinder(scene.cylinders[0], &ray, &obj);
+	// hit_cylinder(scene.cylinders, &ray, &obj, scene.nb_cylinders);
 	return (obj);
 }
-
 
 unsigned int ray_color(t_ray ray, t_scene scene)
 {
@@ -31,8 +30,8 @@ unsigned int ray_color(t_ray ray, t_scene scene)
 	obj = hit_object(ray, scene);
 	if (obj.dist != INFINITY)
 	{
-		ret_color = obj.object.sphere->color.hex;
-		// ret_color = calculate_color(ray, scene, obj);
+		ret_color = return_color(obj, scene);
+		// ret_color = add_light(ray, scene, obj);
 		return (ret_color);
 	}
 	return (000000);

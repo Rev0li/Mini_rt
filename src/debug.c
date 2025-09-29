@@ -6,10 +6,23 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 08:21:22 by okientzl          #+#    #+#             */
-/*   Updated: 2025/09/24 08:22:57 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/09/29 16:48:43 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "mini_rt.h"
+
+unsigned int	return_color(t_hit_objet obj, t_scene scene)
+{
+	unsigned int	color;
+
+		if (obj.form == SPHERE)
+			color = scene.spheres[obj.index].color.hex;
+		if (obj.form == PLANE)
+			color = scene.planes[obj.index].color.hex;
+		if (obj.form == CYLINDRE)
+			color = scene.cylinders[obj.index].color.hex;
+	return (color);
+}
 
 void	print_data(t_scene	scene)
 {	
@@ -22,10 +35,10 @@ void	print_data(t_scene	scene)
 	printf("camera.orientation.x: %f\n", scene.camera.orientation.x);
 	printf("camera.orientation.y: %f\n", scene.camera.orientation.y);
 	printf("camera.orientation.z: %f\n", scene.camera.orientation.z);
-	printf("light.position.x %f\n", scene.light.position.x);
-	printf("light.position.y %f\n", scene.light.position.y);
-	printf("light.position.z %f\n", scene.light.position.z);
-	printf("camera.light.brightness %f\n", scene.light.brightness);
+	printf("light.position.x %f\n", scene.lights->position.x);
+	printf("light.position.y %f\n", scene.lights->position.y);
+	printf("light.position.z %f\n", scene.lights->position.z);
+	printf("camera.light.brightness %f\n", scene.lights->brightness);
 	printf("sphere.center.x %f\n", scene.spheres[0].center.x);
 	printf("sphere.center.y %f\n", scene.spheres[0].center.y);
 	printf("sphere.center.z %f\n", scene.spheres[0].center.z);

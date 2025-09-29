@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 12:52:42 by okientzl          #+#    #+#             */
-/*   Updated: 2025/09/27 16:23:21 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/09/29 18:19:21 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_STRUCTS_H
@@ -72,13 +72,33 @@ typedef struct s_light
 	t_color color;
 } t_light;
 
+typedef struct s_var_sphere
+{
+	float	t1;
+	float	t2;
+	float	a;
+	float	b;
+	float	c;
+	t_vec3	oc;
+	float	discriminant;
+} t_var_sphere;
+
 typedef struct s_sphere
 {
 	t_vec3 center;
 	double radius;
 	double diameter;
+	double raduis;
 	t_color color;
 } t_sphere;
+
+typedef struct s_var_plane
+{
+	float	prod_scalaire;
+	float	t;
+	float	position;
+	float	num;
+} t_var_plane;
 
 typedef struct s_plane
 {
@@ -98,13 +118,9 @@ typedef struct s_cylinder
 
 typedef struct s_hit_object
 {
-	union {
-		t_sphere *sphere;
-		t_plane *plane;
-		t_cylinder *cylinder;
-	} object;
-	float dist;
-	enum form_geo form;
+	int				index;
+	float			dist;
+	enum form_geo	form;
 } t_hit_objet;
 
 typedef struct s_scene
@@ -112,8 +128,9 @@ typedef struct s_scene
 	t_ambient ambient;
 	t_camera camera;
 
-	t_light light;
+	t_light *lights;
 	int nb_lights;
+	int light_index;
 
 	t_sphere *spheres;
 	int nb_spheres;

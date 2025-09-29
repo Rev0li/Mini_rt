@@ -22,6 +22,7 @@ void prepare_scene(t_scene *scene) {
   scene->sphere_index = 0;
   scene->plane_index = 0;
   scene->cylinder_index = 0;
+  scene->light_index = 0;
 }
 
 int main(int ac, char **av) {

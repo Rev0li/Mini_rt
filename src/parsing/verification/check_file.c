@@ -6,7 +6,7 @@
 /*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 13:33:36 by yafahfou          #+#    #+#             */
-/*   Updated: 2025/09/24 13:46:29 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/09/29 17:23:33 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,22 +53,20 @@ int parse_line(char *line, t_scene *scene)
 	i = 0;
 	while (line && line[i])
 	{
-		if (line[i] == 'A')
+		if (line[i] == 'A' && line[i + 1] == ' ')
 		{
 			if (scene->has_ambient == true)
 				return (-1);
 			return (set_ambient_ratio(line, scene, i));
 		}
-		else if (line[i] == 'C')
+		else if (line[i] == 'C' && line[i + 1] == ' ')
 		{
 			if (scene->has_camera == true)
 				return (-1);
 			return (set_camera(line, scene, i));
 		}
-		else if (line[i] == 'L' || line[i] == 'l')
+		else if ((line[i] == 'L' || line[i] == 'l') && line[i + 1] == ' ')
 		{
-			/*if (scene->has_light == true)*/
-			/*	return (-1);*/
 			return (set_light(line, scene, i));
 		}
 		else if (line[i] == 's' && line[i + 1] == 'p')

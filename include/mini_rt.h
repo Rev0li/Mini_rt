@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 13:08:33 by okientzl          #+#    #+#             */
-/*   Updated: 2025/09/27 16:23:23 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/09/29 19:21:16 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../lib/minilibx-linux/mlx.h"
@@ -26,6 +26,8 @@
 
 //___________________________________________
 // ◈◈◈◈◈◈◈◈ utils ◈◈◈◈◈◈◈◈
+int		is_part_of_number(char current, char next);
+int		is_valid_number_start(char current, char next);
 int		is_digit(char c);
 int		ft_strlen(const char *str);
 void	open_check(int fd);
@@ -39,7 +41,6 @@ char	*ft_strjoin_gnl(char const *s1, char const *s2, int index);
 void	*ft_calloc(size_t nmemb, size_t size);
 // ----- tools_mlx -----
 bool	init_app(t_mlx *data);
-void	refresh_image(t_mlx *data);
 int		key_hook(int keycode, t_mlx *data);
 int		mouse_hook(int	keycode,int x, int y, t_mlx *data);
 int		destroy_hook(void *param);
@@ -50,9 +51,10 @@ void	put_pixel(t_mlx *data, int x, int y, unsigned int pixel_color);
 int		loop(t_mlx *data);
 void	draw(t_mlx	*data);
 // ----- sphere -----
-void	hit_sphere(t_sphere *sphere, t_ray *ray, t_hit_objet *obj, int	nb_sphere);
+void	hit_sphere(t_sphere *sphere, t_ray *ray, t_hit_objet *obj, int nb_spheres);
+t_vec3 get_sphere_normal(t_vec3 hit_point, t_sphere *sphere);
 // ----- plane -----
-// void	hit_plane(t_plane plane, t_ray *ray, t_hit_objet *obj);
+void	hit_plane(t_plane *plane, t_ray *ray, t_hit_objet *obj, int nb_planes);
 // ----- cylinder -----
 // void	hit_cylinder(t_cylinder cylinder, t_ray *ray, float *dist);
 //___________________________________________
@@ -66,6 +68,7 @@ double	v_dot(t_vec3 a, t_vec3 b);
 t_vec3	v_cross(t_vec3 a, t_vec3 b);
 double	deg2rad(double d);
 t_vec3	v_norm(t_vec3 a);
+t_vec3	get_hit_point(t_ray ray, float distance);
 //___________________________________________
 // ◈◈◈◈◈◈◈◈ Yass_Le_Bg ◈◈◈◈◈◈◈◈
 
@@ -106,5 +109,6 @@ int		set_camera(char *line, t_scene *scene, int index);
 //___________________________________________
 // ◈◈◈◈◈◈◈◈ debug ◈◈◈◈◈◈◈◈
 void	print_data(t_scene	scene);
+unsigned int	return_color(t_hit_objet obj, t_scene scene);
 
 #endif

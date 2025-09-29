@@ -4,7 +4,7 @@ CFLAGS = -Wall -Wextra -Werror
 
 MLX_DIR = ./lib/minilibx-linux
 # MLX_DIR = ./lib/minilibx-macos
-MLX_FLAGS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
+MLX_FLAGS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -g3
 MLX_LIB = $(MLX_DIR)/libmlx.a
 
 SRCS = src/main.c \
@@ -31,11 +31,13 @@ SRCS = src/main.c \
 		src/display/cylinder/hit_cylinder.c \
 		\
 		src/display/sphere/hit_sphere.c \
+		src/display/sphere/get_sphere_normal.c \
 		\
 		src/utils/ft_strlen.c \
 		src/utils/ft_is_digit.c \
 		src/utils/exit_error.c \
 		src/utils/open_check.c \
+		src/utils/is_part_of_number.c \
 		\
 		src/utils/convert/ft_atoi.c \
 		src/utils/convert/safe_atonbr.c \
@@ -50,6 +52,7 @@ SRCS = src/main.c \
 		src/utils/tools_mlx/key_hook.c \
 		src/utils/tools_mlx/mouse_hook.c \
 		\
+		src/math/get_hit_point.c \
 		src/math/deg2rad.c \
 		src/math/v_add.c \
 		src/math/v_cross.c \
