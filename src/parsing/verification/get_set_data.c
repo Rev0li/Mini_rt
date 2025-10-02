@@ -6,56 +6,36 @@
 /*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 13:40:43 by yafahfou          #+#    #+#             */
-/*   Updated: 2025/09/29 16:55:30 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/09/30 13:19:35 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
 
-void alloc_data(t_scene *scene)
+void	alloc_data(t_scene *scene)
 {
-	if (scene->nb_lights != 0)
-		scene->lights = ft_calloc(scene->nb_lights, sizeof(t_light));
-	if (!scene->lights && scene->nb_lights != 0)
-		exit(EXIT_FAILURE);
 	if (scene->nb_spheres != 0)
 		scene->spheres = ft_calloc(scene->nb_spheres, sizeof(t_sphere));
 	if (!scene->spheres && scene->nb_spheres != 0)
-	{
-		free(scene->lights);
-		exit(EXIT_FAILURE);
-	}
+		exit(EXIT_FAILURE);// safe_exit();
 	if (scene->nb_cylinders != 0)
-	{
 		scene->cylinders = ft_calloc(scene->nb_cylinders, sizeof(t_cylinder));
-		if (!scene->cylinders)
-		{
-			free(scene->spheres);
-			exit(EXIT_FAILURE);
-		}
-	}
+	if (!scene->cylinders && scene->nb_cylinders != 0)
+		exit(EXIT_FAILURE);// safe_exit();
 	if (scene->nb_planes != 0)
-	{
 		scene->planes = ft_calloc(scene->nb_planes, sizeof(t_plane));
-		if (!scene->planes)
-		{
-			free(scene->spheres);
-			free(scene->cylinders);
-			exit(EXIT_FAILURE);
-		}
-	}
+	if (!scene->planes && scene->nb_planes != 0)
+		exit(EXIT_FAILURE);// safe_exit();
 }
 
-void set_data(char *line, t_scene *scene)
+void	set_data(char *line, t_scene *scene)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (line[i])
 	{
-		if ((line[i] == 'L' || line[i] == 'l') && line[i + 1] == ' ')
-			scene->nb_lights++;
-		else if (line[i] == 's' && line[i + 1] == 'p')
+		if (line[i] == 's' && line[i + 1] == 'p')
 			scene->nb_spheres++;
 		else if (line[i] == 'c' && line[i + 1] == 'y')
 			scene->nb_cylinders++;
@@ -65,10 +45,10 @@ void set_data(char *line, t_scene *scene)
 	}
 }
 
-void get_data_from_file(char *file, t_scene *scene)
+void	get_data_from_file(char *file, t_scene *scene)
 {
-	char *line;
-	int fd;
+	char	*line;
+	int		fd;
 
 	fd = open(file, O_RDONLY);
 	open_check(fd);

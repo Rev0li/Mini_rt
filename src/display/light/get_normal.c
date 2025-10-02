@@ -1,30 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   loop.c                                             :+:      :+:    :+:   */
+/*   get_normal.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/30 11:38:53 by okientzl          #+#    #+#             */
-/*   Updated: 2025/09/24 15:01:17 by okientzl         ###   ########.fr       */
+/*   Created: 2025/09/30 15:22:10 by okientzl          #+#    #+#             */
+/*   Updated: 2025/09/30 15:37:06 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "mini_rt.h"
 
-int	loop(t_mlx *data)
+t_vec3 get_normal(t_vec3 hit_point, t_hit_objet obj, t_scene scene)
 {
-	if (init_app(data))
-	{
-		draw(data);
-		mlx_hook(data->window, 2, 1L << 0, key_hook, data);
-		mlx_hook(data->window, 17, 0, destroy_hook, data);
-		mlx_hook(data->window, 4, 1L << 2, mouse_hook, data);
-		mlx_loop(data->mlx);
-	}
-	else
-	{
-		printf("Fail init app\n");
-		return (1);
-	}
-	return (0);
+    if (obj.form == SPHERE)
+        return (get_sphere_normal(hit_point, &scene.spheres[obj.index]));
+    else if (obj.form == PLANE)
+        return (v_norm(scene.planes[obj.index].normal));
+    // else if (obj.form == CYLINDER)
+    //     return (get_cylinder_normal(hit_point, obj.object.cylinder));
+    
+    return ((t_vec3){0, 1, 0}); // valeur par défaut
 }

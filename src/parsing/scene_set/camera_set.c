@@ -6,15 +6,15 @@
 /*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 13:37:52 by yafahfou          #+#    #+#             */
-/*   Updated: 2025/09/24 12:02:44 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/09/30 13:04:09 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "mini_rt.h"
 
-int set_camera(char *line, t_scene *scene, int index)
+int	set_camera(char *line, t_scene *scene, int index)
 {
-	int i;
-	int pos;
+	int	i;
+	int	pos;
 
 	i = index;
 	pos = 1;
@@ -26,7 +26,7 @@ int set_camera(char *line, t_scene *scene, int index)
 			if (pos == 4)
 				return (set_cam_orientation(scene, line, index));
 			i = index;
-			while (is_digit(line[i]) || (line[i] == '.' && (is_digit(line[i + 1]))))
+			while (is_part_of_number(line[i], line[i + 1]))
 				i++;
 			set_camera_pos(&scene->camera, line + index, pos);
 			pos++;
@@ -38,10 +38,10 @@ int set_camera(char *line, t_scene *scene, int index)
 	return (-1);
 }
 
-int set_cam_orientation(t_scene *scene, char *line, int index)
+int	set_cam_orientation(t_scene *scene, char *line, int index)
 {
-	int i;
-	int pos;
+	int	i;
+	int	pos;
 
 	i = index;
 	pos = 1;
@@ -52,7 +52,7 @@ int set_cam_orientation(t_scene *scene, char *line, int index)
 			if (pos == 4)
 				return (set_fov_value(scene, line, index));
 			i = index;
-			while (is_digit(line[i]) || (line[i] == '.' && (is_digit(line[i + 1]))))
+			while (is_part_of_number(line[i], line[i + 1]))
 				i++;
 			set_orientation_values(&scene->camera, line + index, pos);
 			pos++;
@@ -64,7 +64,7 @@ int set_cam_orientation(t_scene *scene, char *line, int index)
 	return (1);
 }
 
-void set_camera_pos(t_camera *camera, char *line, int pos)
+void	set_camera_pos(t_camera *camera, char *line, int pos)
 {
 	if (pos == 1)
 		camera->position.x = ft_atoi(line);
@@ -74,9 +74,8 @@ void set_camera_pos(t_camera *camera, char *line, int pos)
 		camera->position.z = ft_atoi(line);
 }
 
-int set_orientation_values(t_camera *camera, char *line, int pos)
+int	set_orientation_values(t_camera *camera, char *line, int pos)
 {
-
 	if (pos == 1)
 	{
 		camera->orientation.x = ft_atoi(line);
@@ -98,7 +97,7 @@ int set_orientation_values(t_camera *camera, char *line, int pos)
 	return (1);
 }
 
-int set_fov_value(t_scene *scene, char *line, int index)
+int	set_fov_value(t_scene *scene, char *line, int index)
 {
 	scene->camera.fov = ft_atoi(line + index);
 	if (scene->camera.fov < 0 || scene->camera.fov > 180)

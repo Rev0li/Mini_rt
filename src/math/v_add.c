@@ -6,12 +6,12 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 13:56:20 by okientzl          #+#    #+#             */
-/*   Updated: 2025/09/24 15:28:09 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/09/30 13:21:59 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "mini_rt.h"
 
-t_vec3 v_add(t_vec3 a, t_vec3 b)
+t_vec3	v_add(t_vec3 a, t_vec3 b)
 {
 	t_vec3	vec;
 
@@ -20,4 +20,3 @@ t_vec3 v_add(t_vec3 a, t_vec3 b)
 	vec.z = a.z + b.z;
 	return (vec);
 }
-

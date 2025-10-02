@@ -6,12 +6,12 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 08:21:22 by okientzl          #+#    #+#             */
-/*   Updated: 2025/09/29 16:48:43 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/09/30 15:41:04 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "mini_rt.h"
 
-unsigned int	return_color(t_hit_objet obj, t_scene scene)
+unsigned int	return_color_hex(t_hit_objet obj, t_scene scene)
 {
 	unsigned int	color;
 
@@ -24,42 +24,90 @@ unsigned int	return_color(t_hit_objet obj, t_scene scene)
 	return (color);
 }
 
-void	print_data(t_scene	scene)
-{	
-	printf("ratio %f\n", scene.ambient.ratio);
-	printf("colors: %d, %d, %d\n", scene.ambient.color.r, scene.ambient.color.g, scene.ambient.color.b);
-	printf("camera.fov: %f\n", scene.camera.fov);
-	printf("camera.position.x: %f\n", scene.camera.position.x);
-	printf("camera.position.y: %f\n", scene.camera.position.y);
-	printf("camera.position.z: %f\n", scene.camera.position.z);
-	printf("camera.orientation.x: %f\n", scene.camera.orientation.x);
-	printf("camera.orientation.y: %f\n", scene.camera.orientation.y);
-	printf("camera.orientation.z: %f\n", scene.camera.orientation.z);
-	printf("light.position.x %f\n", scene.lights->position.x);
-	printf("light.position.y %f\n", scene.lights->position.y);
-	printf("light.position.z %f\n", scene.lights->position.z);
-	printf("camera.light.brightness %f\n", scene.lights->brightness);
-	printf("sphere.center.x %f\n", scene.spheres[0].center.x);
-	printf("sphere.center.y %f\n", scene.spheres[0].center.y);
-	printf("sphere.center.z %f\n", scene.spheres[0].center.z);
-	printf("sphere numb %d\n", scene.nb_spheres);
-	printf("sphere.diameter %f\nr", scene.spheres[0].diameter);
-	printf("colors: %d, %d, %d\n", scene.spheres[2].color.r, scene.spheres[2].color.g, scene.spheres[2].color.b);
-	// printf("plane.point.x %f\n", scene.planes[1].point.x);
-	// printf("plane.point.y %f\n", scene.planes[1].point.y);
-	// printf("plane.point.z %f\n", scene.planes[1].point.z);
-	// printf("plane numb %d\n", scene.nb_planes);
-	// printf("plane.normal.x %f\n", scene.planes[1].normal.x);
-	// printf("plane.normal.y %f\n", scene.planes[1].normal.y);
-	// printf("plane.normal.z %f\n", scene.planes[1].normal.z);
-	// printf("plane colors: %d, %d, %d\n", scene.planes[0].color.r, scene.planes[0].color.g, scene.planes[0].color.b);
-	// printf("cyl.center.x %f\n", scene.cylinders[1].center.x);
-	// printf("cyl.center.y %f\n", scene.cylinders[1].center.y);
-	// printf("cyl.center.z %f\n", scene.cylinders[1].center.z);
-	// printf("cyl.normal.x %f\n", scene.cylinders[1].axis.x);
-	// printf("cyl.normal.y %f\n", scene.cylinders[1].axis.y);
-	// printf("cyl.normal.z %f\n", scene.cylinders[1].axis.z);
-	// printf("cyl diameter %f\n", scene.cylinders[1].diameter);
-	// printf("cyl height %f\n", scene.cylinders[1].height);
-	// printf("cyl colors: %d, %d, %d\n", scene.cylinders[1].color.r, scene.cylinders[1].color.g, scene.cylinders[1].color.b);
+t_color	return_color(t_hit_objet obj, t_scene scene)
+{
+	t_color	color;
+
+		if (obj.form == SPHERE)
+			color = scene.spheres[obj.index].color;
+		if (obj.form == PLANE)
+			color = scene.planes[obj.index].color;
+		if (obj.form == CYLINDRE)
+			color = scene.cylinders[obj.index].color;
+	return (color);
 }
+
+void	print_vec3(t_vec3 vec, char *name)
+{
+	printf("%s: (x: %.2f, y: %.2f, z: %.2f)\n", name, vec.x, vec.y, vec.z);
+}
+
+void	print_color(t_color color, char *name)
+{
+	printf("%s: (r: %d, g: %d, b: %d, hex: %#06x)\n", name,
+		color.r, color.g, color.b, color.hex);
+}
+
+void	print_data(t_scene *scene)
+{
+	printf("=== SCENE DATA ===\n");
+
+	// Ambient
+	if (scene->has_ambient)
+	{
+		printf("\n[Ambient Light]\n");
+		printf("Ratio: %.2f\n", scene->ambient.ratio);
+		print_color(scene->ambient.color, "Color");
+	}
+	else
+		printf("\n[Ambient Light] Not set\n");
+
+	// Camera
+	if (scene->has_camera)
+	{
+		printf("\n[Camera]\n");
+		print_vec3(scene->camera.position, "Position");
+		print_vec3(scene->camera.orientation, "Orientation");
+		printf("FOV: %.2f\n", scene->camera.fov);
+	}
+	else
+		printf("\n[Camera] Not set\n");
+
+	// Light
+	if (scene->has_light)
+	{
+		printf("\n[Light]\n");
+		print_vec3(scene->light.position, "Position");
+		printf("Brightness: %.2f\n", scene->light.brightness);
+		print_color(scene->light.color, "Color");
+	}
+	else
+		printf("\n[Light] Not set\n");
+
+	// Spheres
+	printf("\n[Spheres] Count: %d\n", scene->nb_spheres);
+	for (int i = 0; i < scene->nb_spheres; i++)
+	{
+		printf("  Sphere %d:\n", i);
+		print_vec3(scene->spheres[i].center, "    Center");
+		printf("    Radius: %.2f\n", scene->spheres[i].radius);
+		printf("    Diameter: %.2f\n", scene->spheres[i].diameter);
+		print_color(scene->spheres[i].color, "    Color");
+	}
+
+	// Planes
+	printf("\n[Planes] Count: %d\n", scene->nb_planes);
+	for (int i = 0; i < scene->nb_planes; i++)
+	{
+		printf("  Plane %d:\n", i);
+		print_vec3(scene->planes[i].point, "    Point");
+		print_vec3(scene->planes[i].normal, "    Normal");
+		print_color(scene->planes[i].color, "    Color");
+	}
+
+	// Cylinders (optionnel, selon ce que tu as)
+	printf("\n[Cylinders] Count: %d (not printed here)\n", scene->nb_cylinders);
+
+	printf("\n=== END OF DATA ===\n");
+}
+

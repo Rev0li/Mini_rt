@@ -6,12 +6,12 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 13:59:34 by okientzl          #+#    #+#             */
-/*   Updated: 2025/08/26 14:35:18 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/09/30 13:22:51 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "mini_rt.h"
 
- double v_len(t_vec3 a)
+double	v_len(t_vec3 a)
 {
-    return sqrt(v_dot(a, a));
+	return (sqrt(v_dot(a, a)));
 }

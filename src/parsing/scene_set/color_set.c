@@ -6,17 +6,17 @@
 /*   By: yafahfou <yafahfou@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 10:58:35 by okientzl          #+#    #+#             */
-/*   Updated: 2025/09/24 12:09:21 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/09/30 13:03:02 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "mini_rt.h"
 
-unsigned int rgb_to_hex(unsigned char r, unsigned char g, unsigned char b)
+unsigned int	rgb_to_hex(unsigned char r, unsigned char g, unsigned char b)
 {
-    return ((r << 16) | (g << 8) | b);
+	return ((r << 16) | (g << 8) | b);
 }
 
-int set_color(t_color *color, int n, int choose)
+int	set_color(t_color *color, int n, int choose)
 {
 	if (n < 0 || n > 255)
 		return (-1);
@@ -29,10 +29,10 @@ int set_color(t_color *color, int n, int choose)
 	return (1);
 }
 
-int parse_color(char *line, t_color *color, int index)
+int	parse_color(char *line, t_color *color, int index)
 {
-	int i;
-	int option;
+	int	i;
+	int	option;
 
 	option = 1;
 	i = index;

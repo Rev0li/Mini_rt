@@ -16,6 +16,7 @@ SRCS = src/main.c \
 		src/parsing/scene_set/light_set.c \
 		src/parsing/scene_set/sphere_set.c \
 		src/parsing/scene_set/cylinder_set.c \
+		src/parsing/scene_set/cylinder_set_utils.c \
 		src/parsing/scene_set/plane_set.c \
 		\
 		src/parsing/verification/check_file.c \
@@ -32,6 +33,10 @@ SRCS = src/main.c \
 		\
 		src/display/sphere/hit_sphere.c \
 		src/display/sphere/get_sphere_normal.c \
+		\
+		src/display/light/utils.c \
+		src/display/light/add_light.c \
+		src/display/light/get_normal.c \
 		\
 		src/utils/ft_strlen.c \
 		src/utils/ft_is_digit.c \

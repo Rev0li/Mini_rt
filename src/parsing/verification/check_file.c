@@ -6,15 +6,15 @@
 /*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 13:33:36 by yafahfou          #+#    #+#             */
-/*   Updated: 2025/09/29 17:23:33 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/09/30 13:12:00 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
 
-int check_file(char *file, t_scene *scene)
+int	check_file(char *file, t_scene *scene)
 {
-	int len;
+	int	len;
 
 	len = ft_strlen(file);
 	if (file[len - 3] == '.' && file[len - 2] == 'r' && file[len - 1] == 't')
@@ -28,10 +28,10 @@ int check_file(char *file, t_scene *scene)
 		return (-1);
 }
 
-int parse_file(char *file, t_scene *scene)
+int	parse_file(char *file, t_scene *scene)
 {
-	char *line;
-	int fd;
+	char	*line;
+	int		fd;
 
 	get_data_from_file(file, scene);
 	fd = open(file, O_RDONLY);
@@ -46,37 +46,47 @@ int parse_file(char *file, t_scene *scene)
 	return (1);
 }
 
-int parse_line(char *line, t_scene *scene)
+int	parse_type_and_set(char *line, t_scene *scene, int i)
 {
-	int i;
+	if (line[i] == 'A' && line[i + 1] == ' ')
+	{
+		if (scene->has_ambient)
+			return (-1);
+		return (set_ambient_ratio(line, scene, i));
+	}
+	else if (line[i] == 'C' && line[i + 1] == ' ')
+	{
+		if (scene->has_camera)
+			return (-1);
+		return (set_camera(line, scene, i));
+	}
+	else if (line[i] == 'L' && line[i + 1] == ' ')
+		return (set_light(line, scene, i));
+	else if (line[i] == 's' && line[i + 1] == 'p')
+		return (set_sphere(line, scene, i));
+	else if (line[i] == 'p' && line[i + 1] == 'l')
+		return (set_plane(line, scene, i));
+	else if (line[i] == 'c' && line[i + 1] == 'y')
+		return (set_cylinder(line, scene, i));
+	return (0);
+}
+
+int	parse_line(char *line, t_scene *scene)
+{
+	int	i;
+	int	result;
 
 	i = 0;
 	while (line && line[i])
 	{
-		if (line[i] == 'A' && line[i + 1] == ' ')
+		if (line[i] != ' ' && line[i] != '\n')
 		{
-			if (scene->has_ambient == true)
-				return (-1);
-			return (set_ambient_ratio(line, scene, i));
+			result = parse_type_and_set(line, scene, i);
+			if (result == -1)
+				exit_error("Error parsing file\n");
+			if (result != 0)
+				return (result);
 		}
-		else if (line[i] == 'C' && line[i + 1] == ' ')
-		{
-			if (scene->has_camera == true)
-				return (-1);
-			return (set_camera(line, scene, i));
-		}
-		else if ((line[i] == 'L' || line[i] == 'l') && line[i + 1] == ' ')
-		{
-			return (set_light(line, scene, i));
-		}
-		else if (line[i] == 's' && line[i + 1] == 'p')
-			return (set_sphere(line, scene, i));
-		else if (line[i] == 'p' && line[i + 1] == 'l')
-			return (set_plane(line, scene, i));
-		else if (line[i] == 'c' && line[i + 1] == 'y')
-			return (set_cylinder(line, scene, i));
-		else if (line[i] && line[i] != ' ' && line[i] != '\n')
-			exit_error("Error parsing file\n");
 		i++;
 	}
 	return (1);

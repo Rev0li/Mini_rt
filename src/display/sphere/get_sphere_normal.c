@@ -6,15 +6,16 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 16:33:30 by okientzl          #+#    #+#             */
-/*   Updated: 2025/09/29 16:34:20 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/09/30 15:40:48 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "mini_rt.h"
 
-t_vec3 get_hit_point(t_ray ray, float distance)
+t_vec3 get_sphere_normal(t_vec3 hit_point, t_sphere *sphere)
 {
-	t_vec3 hit_point;
+	t_vec3 normal;
 
-	hit_point = v_add(ray.origin, v_scale(ray.direction, distance));
-	return (hit_point);
+	normal = v_sub(hit_point, sphere->center);
+	normal = v_norm(normal);
+	return (normal);
 }

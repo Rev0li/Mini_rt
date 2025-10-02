@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 14:52:35 by okientzl          #+#    #+#             */
-/*   Updated: 2025/09/27 16:23:16 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/09/30 16:10:59 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "mini_rt.h"
@@ -22,7 +22,7 @@ t_hit_objet	hit_object(t_ray ray, t_scene scene)
 	return (obj);
 }
 
-unsigned int ray_color(t_ray ray, t_scene scene)
+unsigned int	ray_color(t_ray ray, t_scene scene)
 {
 	unsigned int	ret_color;
 	t_hit_objet		obj;
@@ -30,8 +30,8 @@ unsigned int ray_color(t_ray ray, t_scene scene)
 	obj = hit_object(ray, scene);
 	if (obj.dist != INFINITY)
 	{
-		ret_color = return_color(obj, scene);
-		// ret_color = add_light(ray, scene, obj);
+		// ret_color = return_color_hex(obj, scene);
+		ret_color = add_light(ray, scene, obj);
 		return (ret_color);
 	}
 	return (000000);

@@ -13,27 +13,27 @@
 
 void	assign_dist(t_var_sphere var, t_hit_objet *obj, int i)
 {
-	
-			var.t1 = ((-var.b + sqrt(var.discriminant)) / (2*var.a));
-			var.t2 = ((-var.b - sqrt(var.discriminant)) / (2*var.a));
-			if (var.t2 > 0 && var.t2 < obj->dist)
-			{
-					obj->index = i;
-					obj->dist = var.t2;
-					obj->form = SPHERE;
-			}
-			else if (var.t1 > 0 && var.t1 < obj->dist)
-			{
-					obj->index = i;
-					obj->dist = var.t1;
-					obj->form = SPHERE;
-			}		
+	var.t1 = ((-var.b + sqrt(var.discriminant)) / (2 * var.a));
+	var.t2 = ((-var.b - sqrt(var.discriminant)) / (2 * var.a));
+	if (var.t2 > 0 && var.t2 < obj->dist)
+	{
+		obj->index = i;
+		obj->dist = var.t2;
+		obj->form = SPHERE;
+	}
+	else if (var.t1 > 0 && var.t1 < obj->dist)
+	{
+		obj->index = i;
+		obj->dist = var.t1;
+		obj->form = SPHERE;
+	}
 }
 
-void	hit_sphere(t_sphere *sphere, t_ray *ray, t_hit_objet *obj, int	nb_spheres)
+void	hit_sphere(t_sphere *sphere, t_ray *ray,
+				t_hit_objet *obj, int nb_spheres)
 {
 	t_var_sphere	var;
-	int		i;
+	int				i;
 
 	i = 0;
 	while (i < nb_spheres)

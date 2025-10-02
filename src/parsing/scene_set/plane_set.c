@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 13:38:47 by okientzl          #+#    #+#             */
-/*   Updated: 2025/09/29 19:11:14 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/09/30 13:05:02 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "mini_rt.h"
@@ -86,39 +86,6 @@ int	set_pl_normal(t_scene *scene, char *line, int index)
 	}
 	return (res);
 }
-
-// int	set_pl_normal(t_scene *scene, char *line, int index)
-// {
-// 	int	i;
-// 	int	pos;
-// 	int	res;
-//
-// 	i = index;
-// 	pos = 1;
-// 	res = 1;
-// 	while (line[index])
-// 	{
-// 		if (is_digit(line[index]) || (line[index] == '-' && is_digit(line[index + 1])))
-// 		{
-// 			if (pos == 4)
-// 			{
-// 				res = parse_color(line, &scene->planes[scene->plane_index].color, index);
-// 				scene->plane_index++;
-// 				break;
-// 			}
-// 			i = index;
-// 			while (is_part_of_number(line[i], line[i + 1]))
-// 				i++;
-// 			if (set_pl_vector(scene, line + index, pos) == -1)
-// 				return (-1);
-// 			pos++;
-// 			index = i;
-// 		}
-// 		else
-// 			index++;
-// 	}
-// 	return (res);
-// }
 
 int	set_plane(char *line, t_scene *scene, int index)
 {

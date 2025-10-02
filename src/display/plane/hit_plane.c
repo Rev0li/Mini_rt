@@ -14,7 +14,7 @@
 void	hit_plane(t_plane *plane, t_ray *ray, t_hit_objet *obj, int nb_planes)
 {
 	t_var_plane	var;
-	int		i;
+	int			i;
 
 	i = 0;
 	while (i < nb_planes)
