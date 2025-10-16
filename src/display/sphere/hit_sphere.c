@@ -21,7 +21,7 @@ void	assign_dist(t_var_sphere var, t_hit_objet *obj, int i)
 		obj->dist = var.t2;
 		obj->form = SPHERE;
 	}
-	else if (var.t1 > 0 && var.t1 < obj->dist)
+	if (var.t1 > 0 && var.t1 < obj->dist)
 	{
 		obj->index = i;
 		obj->dist = var.t1;
