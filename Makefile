@@ -2,9 +2,10 @@ NAME = miniRT
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-MLX_DIR = ./lib/minilibx-linux
-# MLX_DIR = ./lib/minilibx-macos
-MLX_FLAGS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -g3
+# MLX_DIR = ./lib/minilibx-linux
+MLX_DIR = ./lib/minilibx_macos
+# MLX_FLAGS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -g3
+MLX_FLAGS = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
 MLX_LIB = $(MLX_DIR)/libmlx.a
 
 SRCS = src/main.c \

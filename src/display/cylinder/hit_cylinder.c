@@ -3,52 +3,58 @@
 /*                                                        :::      ::::::::   */
 /*   hit_cylinder.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 15:31:12 by okientzl          #+#    #+#             */
-/*   Updated: 2025/09/27 15:33:16 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/10/20 14:59:49 by yassinefahf      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "mini_rt.h"
 
-void	hit_cylinder(t_cylinder cylinder,t_ray *ray, t_hit_objet *object, int nb_cylinders)
+// void assign_cylinder_dist(t_var_cylinder var, t_cylinder cylinder, t_hit_objet *obj, int i)
+// {
+//     var.t1 = (-var.b - sqrt(var.discriminant)) / (2 * var.a);
+//     var.t2 = (-var.b + sqrt(var.discriminant)) / (2 * var.a);
+//     var.tmin = fmin(var.t1, var.t2);
+//     if (var.tmin > 0 && var.tmin < obj->dist)
+//     {
+//         var.point = set_vec(ray.ori)
+//                         var.proj_to_cyl = v_dot(v_sub(, cylinder.center), cylinder.axis);
+//     }
+// }
+
+void hit_cylinder(t_cylinder *cylinders, t_ray *ray, t_hit_objet *object, int nb_cylinders)
 {
-    double  a;
-    double  b;
-    double  c;
-    double  t[2];
-    int     i;
-    float   discriminant;
-    float   z1;
-	float	z2;
+    t_var_cylinder var;
+    int i;
 
     i = 0;
+    var.x = v_sub(ray->origin, cylinders[i].center);
     while (i < nb_cylinders)
     {
-        a = (ray->direction.x * ray->direction.x) + (ray->direction.y * ray->direction.y);
-        b = 2 * ((ray->origin.x * ray->direction.x) + (ray->origin.y * ray->direction.y));
-        c = ((ray->origin.x * ray->origin.x) + (ray->origin.y * ray->origin.y) -1);
-        discriminant = (b * b) - (4 * a * c);
-        if (discriminant > 0)
+        var.a = v_dot(ray->direction, ray->direction) - pow(v_dot(ray->direction, cylinders[i].axis), 2.);
+        var.b = 2 * (v_dot(ray->direction, var.x) - (v_dot(ray->direction, cylinders[i].axis) * v_dot(var.x, cylinders[i].axis)));
+        var.c = (v_dot(var.x, var.x) - pow(v_dot(var.x, cylinders[i].axis), 2.)) - pow(cylinders[i].diameter / 2, 2);
+        var.discriminant = pow(var.b, 2.) - (4 * var.a * var.c);
+        if (var.discriminant >= 0)
         {
-            t[0] = (-b + sqrt(discriminant)) / (2*a);
-            t[1] = (-b - sqrt(discriminant)) / (2*a);
-			z1 = ray->origin.z + (t[0] * ray->direction.z);
-			if (-1 <= z1 && z1 >= 1)
-			{
-				object->dist = t[0];
-				object->index = i;
-				object->form = CYLINDRE;
-			}
-			z2 = ray->origin.z + (t[1] * ray->direction.z);
+            var.t1 = (-var.b - sqrt(var.discriminant)) / (2 * var.a);
+            var.t2 = (-var.b + sqrt(var.discriminant)) / (2 * var.a);
+            var.tmin = fmin(var.t1, var.t2);
+            if (var.tmin > 0 && var.tmin < object->dist)
+            {
+                var.point = set_vec(ray->origin.x + (var.tmin * ray->direction.x), ray->origin.y + ray->direction.y * var.tmin, ray->origin.z + var.tmin * ray->direction.z);
+                var.proj_to_cyl = v_dot(v_sub(var.point, cylinders[i].center), cylinders[i].axis);
+                if (var.proj_to_cyl > 0 && var.proj_to_cyl <= cylinders[i].height)
+                {
+                    object->index = i;
+                    object->dist = var.tmin;
+                    object->form = CYLINDRE;
+                }
+            }
+            // assign_cylinder_dist(var, cylinder, object, i);
         }
-        if (discriminant < 0)
-        {
-            i++;
-            continue;
-        }
-        
-		
-    } 
+        i++;
+    }
 }
-

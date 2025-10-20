@@ -3,29 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 14:52:35 by okientzl          #+#    #+#             */
-/*   Updated: 2025/09/30 16:10:59 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/10/20 14:30:12 by yassinefahf      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "mini_rt.h"
 
-t_hit_objet	hit_object(t_ray ray, t_scene scene)
+t_hit_objet hit_object(t_ray ray, t_scene scene)
 {
-	t_hit_objet		obj;
+	t_hit_objet obj;
 
 	obj.dist = INFINITY;
 	hit_plane(scene.planes, &ray, &obj, scene.nb_planes);
 	hit_sphere(scene.spheres, &ray, &obj, scene.nb_spheres);
-	// hit_cylinder(scene.cylinders, &ray, &obj, scene.nb_cylinders);
+	hit_cylinder(scene.cylinders, &ray, &obj, scene.nb_cylinders);
 	return (obj);
 }
 
-unsigned int	ray_color(t_ray ray, t_scene scene)
+unsigned int ray_color(t_ray ray, t_scene scene)
 {
-	unsigned int	ret_color;
-	t_hit_objet		obj;
+	unsigned int ret_color;
+	t_hit_objet obj;
 
 	obj = hit_object(ray, scene);
 	if (obj.dist != INFINITY)
@@ -37,12 +38,12 @@ unsigned int	ray_color(t_ray ray, t_scene scene)
 	return (000000);
 }
 
-void	draw(t_mlx	*data)
+void draw(t_mlx *data)
 {
-	int				x;
-	int				y;
-	unsigned int	pixel_color;
-	t_ray			ray;
+	int x;
+	int y;
+	unsigned int pixel_color;
+	t_ray ray;
 
 	y = 0;
 	while (y < data->height)

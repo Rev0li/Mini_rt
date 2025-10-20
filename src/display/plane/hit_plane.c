@@ -3,18 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   hit_plane.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 15:30:14 by okientzl          #+#    #+#             */
-/*   Updated: 2025/09/27 16:23:15 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/10/09 18:28:29 by yassinefahf      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "mini_rt.h"
 
-void	hit_plane(t_plane *plane, t_ray *ray, t_hit_objet *obj, int nb_planes)
+void hit_plane(t_plane *plane, t_ray *ray, t_hit_objet *obj, int nb_planes)
 {
-	t_var_plane	var;
-	int			i;
+	t_var_plane var;
+	int i;
 
 	i = 0;
 	while (i < nb_planes)
@@ -34,5 +35,5 @@ void	hit_plane(t_plane *plane, t_ray *ray, t_hit_objet *obj, int nb_planes)
 		}
 		i++;
 	}
-	return ;
+	return;
 }
