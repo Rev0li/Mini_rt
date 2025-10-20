@@ -21,6 +21,11 @@ SRCS = src/main.c \
 		\
 		src/parsing/verification/check_file.c \
 		src/parsing/verification/get_set_data.c \
+		src/parsing/verification/safe_open.c \
+		\
+		src/parsing/utils/autorize.c \
+		src/parsing/utils/safe_atoi.c \
+		src/parsing/utils/parse_coordinates.c \
 		\
 		src/display/create_ray_from_pixel.c \
 		src/display/put_pixel.c \
@@ -45,7 +50,6 @@ SRCS = src/main.c \
 		src/utils/is_part_of_number.c \
 		\
 		src/utils/convert/ft_atoi.c \
-		src/utils/convert/safe_atonbr.c \
 		\
 		src/utils/get_line/get_next_line.c \
 		src/utils/get_line/get_next_line_utils.c \

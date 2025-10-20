@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 13:08:33 by okientzl          #+#    #+#             */
-/*   Updated: 2025/10/02 20:15:03 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/10/20 20:10:26 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,14 @@
 // ◈◈◈◈◈◈◈◈ utils ◈◈◈◈◈◈◈◈
 int		is_part_of_number(char current, char next);
 int		is_valid_number_start(char current, char next);
-int		is_digit(char c);
+///////
+int		safe_atof(char *str, double *result, int *end_index);
+int		safe_atoi(char *str, int *result, int *end_index);
+int		ft_is_digit(char c);
 int		ft_strlen(const char *str);
 void	exit_free(t_mlx *data);
 void	free_all(t_mlx *data);
+int		safe_open(char *file, int *fd);
 // ----- convert -----
 double	ft_atoi(const char *str);
 // ----- get_line -----
@@ -97,8 +101,23 @@ int		set_light(char *line, t_scene *scene, int index);
 int		check_file(char *file, t_scene *scene);
 int		parse_file(char *file, t_scene *scene);
 int		parse_line(char *line, t_scene *scene);
+
+// ----- autorize -----
+
+int	is_valid_number_start(char c, char next);
+int	is_valid_char(char c);
+int	skip_whitespace(char *line, int index);
+
+int	validate_normalized(double value);
+int	validate_fov(int value);
+int	validate_positive(double value);
+int	validate_ratio(double value);
+
+int	parse_coordinates(char *line, t_vec3 *vec, int *idx);
+int	parse_normalized_vector(char *line, t_vec3 *vec, int *idx);
+/////
 // get_set_data.c
-int	get_data_from_file(char *file, t_scene *scene);
+int		get_data_from_file(char *file, t_scene *scene);
 
 // ambiant_set.c
 int		set_ambient_ratio(char *line, t_scene *scene, int index);

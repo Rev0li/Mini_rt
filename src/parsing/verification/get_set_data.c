@@ -12,7 +12,7 @@
 
 #include "mini_rt.h"
 
-void	free_partial_scene(t_scene *scene)
+int	free_partial_scene(t_scene *scene)
 {
 	if (scene->spheres)
 	{
@@ -29,6 +29,7 @@ void	free_partial_scene(t_scene *scene)
 		free(scene->planes);
 		scene->planes = NULL;
 	}
+	return (-1);
 }
 
 int	alloc_data(t_scene *scene)
@@ -37,19 +38,19 @@ int	alloc_data(t_scene *scene)
 	{
 		scene->spheres = ft_calloc(scene->nb_spheres, sizeof(t_sphere));
 		if (!scene->spheres)
-			return (free_partial_scene(scene), -1);
+			return (free_partial_scene(scene));
 	}
 	if (scene->nb_cylinders != 0)
 	{
 		scene->cylinders = ft_calloc(scene->nb_cylinders, sizeof(t_cylinder));
 		if (!scene->cylinders)
-			return (free_partial_scene(scene), -1);
+			return (free_partial_scene(scene));
 	}
 	if (scene->nb_planes != 0)
 	{
 		scene->planes = ft_calloc(scene->nb_planes, sizeof(t_plane));
 		if (!scene->planes)
-			return (free_partial_scene(scene), -1);
+			return (free_partial_scene(scene));
 	}
 	return (0);
 }
@@ -76,8 +77,7 @@ int	get_data_from_file(char *file, t_scene *scene)
 	char	*line;
 	int		fd;
 
-	fd = open(file, O_RDONLY);
-	if (fd < 0)
+	if (safe_open(file, &fd) == -1)
 		return (-1);
 	line = get_next_line(fd);
 	while (line)
@@ -88,6 +88,9 @@ int	get_data_from_file(char *file, t_scene *scene)
 	}
 	close(fd);
 	if (alloc_data(scene) == -1)
+	{
+		printf("Error calloc object\n");
 		return (-1);
+	}
 	return (0);
 }

@@ -52,7 +52,7 @@ double	ft_atoi(const char *str)
 		if ((total > INT_MAX || total < INT_MIN) && total != 2147483648)
 			return (0);
 		i++;
-		if (str[i] && str[i] == '.' && is_digit(str[i + 1]))
+		if (str[i] && str[i] == '.' && ft_is_digit(str[i + 1]))
 			return (to_double(total, sign, str + i + 1));
 	}
 	return (total * sign);
