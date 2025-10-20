@@ -21,11 +21,13 @@ int	check_file(char *file, t_scene *scene)
 	{
 		if (parse_file(file, scene) == -1)
 			return (-1);
-		else
-			return (1);
+		return (0);
 	}
 	else
+	{
+		printf("File is not good format\n");
 		return (-1);
+	}
 }
 
 int	parse_file(char *file, t_scene *scene)
@@ -33,16 +35,24 @@ int	parse_file(char *file, t_scene *scene)
 	char	*line;
 	int		fd;
 
-	get_data_from_file(file, scene);
+	if (get_data_from_file(file, scene) == -1)
+		return (-1);
 	fd = open(file, O_RDONLY);
-	open_check(fd);
+	if (fd < 0)
+		return (-1);
 	line = get_next_line(fd);
 	while (line)
 	{
 		if (parse_line(line, scene) == -1)
+		{
+			free(line);
+			close(fd);
 			return (-1);
+		}
+		free(line);
 		line = get_next_line(fd);
 	}
+	close(fd);
 	return (1);
 }
 
@@ -68,7 +78,7 @@ int	parse_type_and_set(char *line, t_scene *scene, int i)
 		return (set_plane(line, scene, i));
 	else if (line[i] == 'c' && line[i + 1] == 'y')
 		return (set_cylinder(line, scene, i));
-	return (0);
+	return (-1);
 }
 
 int	parse_line(char *line, t_scene *scene)
@@ -83,7 +93,7 @@ int	parse_line(char *line, t_scene *scene)
 		{
 			result = parse_type_and_set(line, scene, i);
 			if (result == -1)
-				exit_error("Error parsing file\n");
+				return (-1);
 			if (result != 0)
 				return (result);
 		}

@@ -12,20 +12,46 @@
 
 #include "mini_rt.h"
 
-void	alloc_data(t_scene *scene)
+void	free_partial_scene(t_scene *scene)
+{
+	if (scene->spheres)
+	{
+		free(scene->spheres);
+		scene->spheres = NULL;
+	}
+	if (scene->cylinders)
+	{
+		free(scene->cylinders);
+		scene->cylinders = NULL;
+	}
+	if (scene->planes)
+	{
+		free(scene->planes);
+		scene->planes = NULL;
+	}
+}
+
+int	alloc_data(t_scene *scene)
 {
 	if (scene->nb_spheres != 0)
+	{
 		scene->spheres = ft_calloc(scene->nb_spheres, sizeof(t_sphere));
-	if (!scene->spheres && scene->nb_spheres != 0)
-		exit(EXIT_FAILURE);// safe_exit();
+		if (!scene->spheres)
+			return (free_partial_scene(scene), -1);
+	}
 	if (scene->nb_cylinders != 0)
+	{
 		scene->cylinders = ft_calloc(scene->nb_cylinders, sizeof(t_cylinder));
-	if (!scene->cylinders && scene->nb_cylinders != 0)
-		exit(EXIT_FAILURE);// safe_exit();
+		if (!scene->cylinders)
+			return (free_partial_scene(scene), -1);
+	}
 	if (scene->nb_planes != 0)
+	{
 		scene->planes = ft_calloc(scene->nb_planes, sizeof(t_plane));
-	if (!scene->planes && scene->nb_planes != 0)
-		exit(EXIT_FAILURE);// safe_exit();
+		if (!scene->planes)
+			return (free_partial_scene(scene), -1);
+	}
+	return (0);
 }
 
 void	set_data(char *line, t_scene *scene)
@@ -45,19 +71,23 @@ void	set_data(char *line, t_scene *scene)
 	}
 }
 
-void	get_data_from_file(char *file, t_scene *scene)
+int	get_data_from_file(char *file, t_scene *scene)
 {
 	char	*line;
 	int		fd;
 
 	fd = open(file, O_RDONLY);
-	open_check(fd);
+	if (fd < 0)
+		return (-1);
 	line = get_next_line(fd);
 	while (line)
 	{
 		set_data(line, scene);
+		free(line);
 		line = get_next_line(fd);
 	}
-	alloc_data(scene);
 	close(fd);
+	if (alloc_data(scene) == -1)
+		return (-1);
+	return (0);
 }

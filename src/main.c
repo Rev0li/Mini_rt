@@ -26,22 +26,26 @@ void	prepare_scene(t_scene *scene)
 
 int	main(int ac, char **av)
 {
-	t_scene	scene;
 	t_mlx	*data;
 
 	data = (t_mlx *)ft_calloc(1, sizeof(t_mlx));
-	prepare_scene(&scene);
+	prepare_scene(&data->scene);
 	if (ac == 2)
 	{
-		if (check_file(av[1], &scene) == -1)
+		if (check_file(av[1], &data->scene) == -1)
 		{
-			write(2, "Error\n", 6);
-			exit(EXIT_FAILURE);
+			// printf("checkfail \n");
+			exit_free(data);
 		}
-		data->scene = scene;
-		print_data(&scene);
-		loop(data);
+		print_data(&data->scene);
+		if (loop(data) == -1)
+		{
+			free_all(data);
+			return (-1);
+		}
 	}
 	else
 		printf("error argument\n");
+	free_all(data);
+	return (0);
 }

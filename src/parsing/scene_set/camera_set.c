@@ -102,5 +102,12 @@ int	set_fov_value(t_scene *scene, char *line, int index)
 	scene->camera.fov = ft_atoi(line + index);
 	if (scene->camera.fov < 0 || scene->camera.fov > 180)
 		return (-1);
+	if (scene->camera.orientation.x == 0 &&
+		scene->camera.orientation.y == 0 &&
+		scene->camera.orientation.z == 0)
+	{
+		printf("No direction on camera\n");
+		return (-1);
+	}
 	return (1);
 }

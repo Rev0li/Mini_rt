@@ -6,13 +6,13 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 12:52:42 by okientzl          #+#    #+#             */
-/*   Updated: 2025/09/30 16:13:04 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/10/02 20:15:04 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef STRUCT_H
 # define STRUCT_H
-# define W_HEIGHT 900
-# define W_WIDTH 1200
+# define W_HEIGHT 500
+# define W_WIDTH 300
 # define M_PI 3.14159265358979323846
 # include <unistd.h>
 # include <stdlib.h>
@@ -25,7 +25,7 @@ enum e_form_geo
 {
 	SPHERE,
 	PLANE,
-	CYLINDRE
+	CYLINDER
 };
 
 typedef struct s_vec3
@@ -71,6 +71,7 @@ typedef struct s_camera
 	t_vec3	position;
 	t_vec3	orientation;
 	double	fov;
+	bool	is_valid;
 }	t_camera;
 
 typedef struct s_light
@@ -115,6 +116,16 @@ typedef struct s_plane
 	t_color	color;
 }	t_plane;
 
+typedef struct s_var_cylinder
+{
+    t_vec3    oc;             // Vecteur entre l'origine du rayon et le centre du cylindre
+    double    axis_dot;       // Produit scalaire de la direction du rayon et de l'axe du cylindre
+    double    oc_dot;         // Produit scalaire du vecteur oc et de l'axe du cylindre
+    double    a, b, c;        // Coefficients de l'équation quadratique
+    double    t1, t2;         // Solutions de l'équation quadratique
+    double    discriminant;   // Discriminant de l'équation quadratique
+} t_var_cylinder;
+
 typedef struct s_cylinder
 {
 	t_vec3	center;
@@ -129,6 +140,8 @@ typedef struct s_hit_object
 	int				index;
 	float			dist;
 	enum e_form_geo	form;
+	bool			tangent;
+	t_vec3			hit_point;
 }	t_hit_objet;
 
 typedef struct s_scene

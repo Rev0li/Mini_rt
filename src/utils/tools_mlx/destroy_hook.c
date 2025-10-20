@@ -11,21 +11,7 @@
 /* ************************************************************************** */
 #include "mini_rt.h"
 
-static void	free_data(t_mlx *data)
-{
-	if (!data)
-		return ;
-	if (data->img)
-		mlx_destroy_image(data->mlx, data->img);
-	if (data->window)
-		mlx_destroy_window(data->mlx, data->window);
-	if (data->mlx)
-	{
-		mlx_destroy_display(data->mlx);
-		free(data->mlx);
-	}
-	free(data);
-}
+
 
 int	destroy_hook(void *param)
 {
@@ -33,7 +19,7 @@ int	destroy_hook(void *param)
 
 	data = (t_mlx *)param;
 	mlx_loop_end(data->mlx);
-	free_data(data);
+	free_all(data);
 	exit(0);
 	return (0);
 }

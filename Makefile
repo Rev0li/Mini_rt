@@ -30,6 +30,7 @@ SRCS = src/main.c \
 		src/display/plane/hit_plane.c \
 		\
 		src/display/cylinder/hit_cylinder.c \
+		src/display/cylinder/get_cylinder_normal.c \
 		\
 		src/display/sphere/hit_sphere.c \
 		src/display/sphere/get_sphere_normal.c \
@@ -41,7 +42,6 @@ SRCS = src/main.c \
 		src/utils/ft_strlen.c \
 		src/utils/ft_is_digit.c \
 		src/utils/exit_error.c \
-		src/utils/open_check.c \
 		src/utils/is_part_of_number.c \
 		\
 		src/utils/convert/ft_atoi.c \

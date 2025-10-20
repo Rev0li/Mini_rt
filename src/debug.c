@@ -19,7 +19,7 @@ unsigned int	return_color_hex(t_hit_objet obj, t_scene scene)
 			color = scene.spheres[obj.index].color.hex;
 		if (obj.form == PLANE)
 			color = scene.planes[obj.index].color.hex;
-		if (obj.form == CYLINDRE)
+		if (obj.form == CYLINDER)
 			color = scene.cylinders[obj.index].color.hex;
 	return (color);
 }
@@ -32,7 +32,7 @@ t_color	return_color(t_hit_objet obj, t_scene scene)
 			color = scene.spheres[obj.index].color;
 		if (obj.form == PLANE)
 			color = scene.planes[obj.index].color;
-		if (obj.form == CYLINDRE)
+		if (obj.form == CYLINDER)
 			color = scene.cylinders[obj.index].color;
 	return (color);
 }
@@ -105,9 +105,17 @@ void	print_data(t_scene *scene)
 		print_color(scene->planes[i].color, "    Color");
 	}
 
-	// Cylinders (optionnel, selon ce que tu as)
-	printf("\n[Cylinders] Count: %d (not printed here)\n", scene->nb_cylinders);
-
+	// Cylinders 
+    printf("\n[Cylinders] Count: %d\n", scene->nb_cylinders);
+    for (int i = 0; i < scene->nb_cylinders; i++)
+    {
+        printf("  Cylinder %d:\n", i);
+        print_vec3(scene->cylinders[i].center, "    Center");
+        print_vec3(scene->cylinders[i].axis, "    Axis");
+        printf("    Diameter: %.2f\n", scene->cylinders[i].diameter);
+        printf("    Height: %.2f\n", scene->cylinders[i].height);
+        print_color(scene->cylinders[i].color, "    Color");
+    }
 	printf("\n=== END OF DATA ===\n");
 }
 

@@ -24,7 +24,7 @@ int	loop(t_mlx *data)
 	else
 	{
 		printf("Fail init app\n");
-		return (1);
+		return (-1);
 	}
 	return (0);
 }

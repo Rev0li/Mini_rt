@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 13:08:33 by okientzl          #+#    #+#             */
-/*   Updated: 2025/10/01 18:11:07 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/10/02 20:15:03 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ int		is_part_of_number(char current, char next);
 int		is_valid_number_start(char current, char next);
 int		is_digit(char c);
 int		ft_strlen(const char *str);
-void	open_check(int fd);
-void	exit_error(char *message);
+void	exit_free(t_mlx *data);
+void	free_all(t_mlx *data);
 // ----- convert -----
 double	ft_atoi(const char *str);
 // ----- get_line -----
@@ -63,7 +63,8 @@ t_vec3	get_sphere_normal(t_vec3 hit_point, t_sphere *sphere);
 // ----- plane -----
 void	hit_plane(t_plane *plane, t_ray *ray, t_hit_objet *obj, int nb_planes);
 // ----- cylinder -----
-// void	hit_cylinder(t_cylinder cylinder, t_ray *ray, float *dist);
+void	hit_cylinder(t_cylinder *cylinder, t_ray *ray, t_hit_objet *obj, int nb_cylinders);
+t_vec3	get_cylinder_normal(t_vec3 hit_point, t_cylinder *sphere);
 //___________________________________________
 // ◈◈◈◈◈◈◈◈ math ◈◈◈◈◈◈◈◈
 t_vec3	set_vec(double x, double y, double z);
@@ -97,7 +98,7 @@ int		check_file(char *file, t_scene *scene);
 int		parse_file(char *file, t_scene *scene);
 int		parse_line(char *line, t_scene *scene);
 // get_set_data.c
-void	get_data_from_file(char *file, t_scene *scene);
+int	get_data_from_file(char *file, t_scene *scene);
 
 // ambiant_set.c
 int		set_ambient_ratio(char *line, t_scene *scene, int index);
