@@ -51,6 +51,7 @@ SRCS = src/main.c \
 		src/utils/safe_open.c \
 		src/utils/safe_atoi.c \
 		src/utils/ft_atoi.c \
+		src/utils/return_color.c \
 		\
 		src/utils/get_line/get_next_line.c \
 		src/utils/get_line/get_next_line_utils.c \
