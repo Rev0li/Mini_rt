@@ -6,7 +6,7 @@
 /*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 13:40:43 by yafahfou          #+#    #+#             */
-/*   Updated: 2025/09/30 13:19:35 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/10/21 13:20:04 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	get_data_from_file(char *file, t_scene *scene)
 	close(fd);
 	if (alloc_data(scene) == -1)
 	{
-		printf("Error calloc object\n");
+		printf("Error: calloc object\n");
 		return (-1);
 	}
 	return (0);

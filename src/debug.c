@@ -32,7 +32,9 @@ t_color	return_color(t_hit_objet obj, t_scene scene)
 			color = scene.spheres[obj.index].color;
 		if (obj.form == PLANE)
 			color = scene.planes[obj.index].color;
-		if (obj.form == CYLINDER)
+		if (obj.form == CYLINDER
+			|| obj.form == CIRCLE_TOP
+			|| obj.form == CIRCLE_BOTTOM)
 			color = scene.cylinders[obj.index].color;
 	return (color);
 }

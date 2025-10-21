@@ -6,13 +6,13 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 12:52:42 by okientzl          #+#    #+#             */
-/*   Updated: 2025/10/20 20:10:26 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/10/21 16:53:10 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef STRUCT_H
 # define STRUCT_H
-# define W_HEIGHT 500
-# define W_WIDTH 300
+# define W_HEIGHT 1500
+# define W_WIDTH 1300
 # define M_PI 3.14159265358979323846
 # include <unistd.h>
 # include <stdlib.h>
@@ -25,7 +25,9 @@ enum e_form_geo
 {
 	SPHERE,
 	PLANE,
-	CYLINDER
+	CYLINDER,
+	CIRCLE_TOP,
+	CIRCLE_BOTTOM
 };
 
 typedef struct s_vec3
@@ -118,12 +120,16 @@ typedef struct s_plane
 
 typedef struct s_var_cylinder
 {
-    t_vec3    oc;             // Vecteur entre l'origine du rayon et le centre du cylindre
-    double    axis_dot;       // Produit scalaire de la direction du rayon et de l'axe du cylindre
-    double    oc_dot;         // Produit scalaire du vecteur oc et de l'axe du cylindre
-    double    a, b, c;        // Coefficients de l'équation quadratique
-    double    t1, t2;         // Solutions de l'équation quadratique
-    double    discriminant;   // Discriminant de l'équation quadratique
+	double t1;
+	double t2;
+	double a;
+	double b;
+	double c;
+	double tmin;
+	t_vec3 x;
+	double proj_to_cyl;
+	t_vec3 point;
+	double discriminant;
 } t_var_cylinder;
 
 typedef struct s_cylinder
@@ -148,7 +154,6 @@ typedef struct s_scene
 {
 	t_ambient	ambient;
 	t_camera	camera;
-
 	t_light		light;
 
 	t_sphere	*spheres;

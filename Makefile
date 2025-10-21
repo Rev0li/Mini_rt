@@ -10,22 +10,21 @@ MLX_LIB = $(MLX_DIR)/libmlx.a
 SRCS = src/main.c \
 	   src/debug.c \
 		\
+		src/parsing/check_file.c \
+		\
 		src/parsing/scene_set/ambiant_set.c \
 		src/parsing/scene_set/camera_set.c \
 		src/parsing/scene_set/color_set.c \
 		src/parsing/scene_set/light_set.c \
 		src/parsing/scene_set/sphere_set.c \
 		src/parsing/scene_set/cylinder_set.c \
-		src/parsing/scene_set/cylinder_set_utils.c \
 		src/parsing/scene_set/plane_set.c \
 		\
-		src/parsing/verification/check_file.c \
-		src/parsing/verification/get_set_data.c \
-		src/parsing/verification/safe_open.c \
 		\
-		src/parsing/utils/autorize.c \
-		src/parsing/utils/safe_atoi.c \
+		src/parsing/utils/get_set_data.c \
+		src/parsing/utils/valid_range.c \
 		src/parsing/utils/parse_coordinates.c \
+		src/parsing/utils/validate_line_chars.c \
 		\
 		src/display/create_ray_from_pixel.c \
 		src/display/put_pixel.c \
@@ -35,6 +34,7 @@ SRCS = src/main.c \
 		src/display/plane/hit_plane.c \
 		\
 		src/display/cylinder/hit_cylinder.c \
+		src/display/cylinder/hit_circle.c \
 		src/display/cylinder/get_cylinder_normal.c \
 		\
 		src/display/sphere/hit_sphere.c \
@@ -47,9 +47,10 @@ SRCS = src/main.c \
 		src/utils/ft_strlen.c \
 		src/utils/ft_is_digit.c \
 		src/utils/exit_error.c \
-		src/utils/is_part_of_number.c \
-		\
-		src/utils/convert/ft_atoi.c \
+		src/utils/skip_whitespace.c \
+		src/utils/safe_open.c \
+		src/utils/safe_atoi.c \
+		src/utils/ft_atoi.c \
 		\
 		src/utils/get_line/get_next_line.c \
 		src/utils/get_line/get_next_line_utils.c \
@@ -61,6 +62,7 @@ SRCS = src/main.c \
 		src/utils/tools_mlx/key_hook.c \
 		src/utils/tools_mlx/mouse_hook.c \
 		\
+		src/math/distance.c \
 		src/math/get_hit_point.c \
 		src/math/deg2rad.c \
 		src/math/v_add.c \

@@ -22,7 +22,7 @@ int	set_light(char *line, t_scene *scene, int index)
 	if (parse_coordinates(line, &scene->light.position, &index) == -1)
 		return (-1);
 	index = skip_whitespace(line, index);
-	if (!safe_atof(line + index, &brightness, &end))
+	if (!safe_atof(line + index, &brightness, &end) || line[index + end] != ' ')
 		return (printf("Error: Invalid light brightness\n"), -1);
 	if (!validate_ratio(brightness))
 		return (-1);

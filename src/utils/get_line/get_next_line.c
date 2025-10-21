@@ -6,7 +6,7 @@
 /*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 17:55:06 by yafahfou          #+#    #+#             */
-/*   Updated: 2025/08/19 14:08:23 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/10/21 16:34:29 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "mini_rt.h"
@@ -34,6 +34,7 @@ char	*ft_strjoin_check(char *s1, char *s2)
 		return (NULL);
 	return (tmp);
 }
+
 int	read_file(char *buff, char **str, int fd)
 {
 	ssize_t	bytes;

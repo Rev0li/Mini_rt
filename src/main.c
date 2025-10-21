@@ -34,7 +34,6 @@ int	main(int ac, char **av)
 	{
 		if (check_file(av[1], &data->scene) == -1)
 		{
-			// printf("checkfail \n");
 			exit_free(data);
 		}
 		print_data(&data->scene);

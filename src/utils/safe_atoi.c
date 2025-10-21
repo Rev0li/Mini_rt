@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 19:22:19 by okientzl          #+#    #+#             */
-/*   Updated: 2025/10/20 20:10:23 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/10/21 15:39:58 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "mini_rt.h"
@@ -47,6 +47,8 @@ static int	parse_float_decimal(char *str, int *i, double *result)
 	{
 		(*i)++;
 		divisor = 10.0;
+		if (!ft_is_digit(str[*i]))
+			return (-1);
 		while (ft_is_digit(str[*i]))
 		{
 			*result += (str[*i] - '0') / divisor;
@@ -73,14 +75,15 @@ int	safe_atof(char *str, double *result, int *end_index)
 	parse_float_sign(str, &i, &sign);
 	has_int = parse_float_integer(str, &i, &value);
 	has_dec = parse_float_decimal(str, &i, &value);
-	if (!has_int && !has_dec)
+	if ((!has_int && !has_dec) || has_dec == -1)
+		return (0);
+	if (str[i] == '.')
 		return (0);
 	*result = value * sign;
 	if (end_index)
 		*end_index = i;
 	return (1);
 }
-
 
 int	safe_atoi(char *str, int *result, int *end_index)
 {

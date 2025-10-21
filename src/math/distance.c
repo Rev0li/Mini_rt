@@ -1,21 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_sphere_normal.c                                :+:      :+:    :+:   */
+/*   distance.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/29 16:33:30 by okientzl          #+#    #+#             */
-/*   Updated: 2025/10/21 16:40:16 by okientzl         ###   ########.fr       */
+/*   Created: 2025/10/21 12:54:43 by yassinefahf       #+#    #+#             */
+/*   Updated: 2025/10/21 16:45:39 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "mini_rt.h"
 
-t_vec3	get_sphere_normal(t_vec3 hit_point, t_sphere *sphere)
+double	distance(t_vec3 a, t_vec3 b)
 {
-	t_vec3	normal;
-
-	normal = v_sub(hit_point, sphere->center);
-	normal = v_norm(normal);
-	return (normal);
+	return (sqrt(pow(a.x - b.x, 2) + pow(a.y - b.y, 2) + pow(a.z - b.z, 2)));
 }
