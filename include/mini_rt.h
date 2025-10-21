@@ -6,7 +6,7 @@
 /*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 13:08:33 by okientzl          #+#    #+#             */
-/*   Updated: 2025/10/20 14:56:40 by yassinefahf      ###   ########.fr       */
+/*   Updated: 2025/10/21 12:58:01 by yassinefahf      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ t_vec3 v_cross(t_vec3 a, t_vec3 b);
 double deg2rad(double d);
 t_vec3 v_norm(t_vec3 a);
 t_vec3 get_hit_point(t_ray ray, float distance);
+double distance(t_vec3 a, t_vec3 b);
 //___________________________________________
 // ◈◈◈◈◈◈◈◈ Yass_Le_Bg ◈◈◈◈◈◈◈◈
 
@@ -115,6 +116,9 @@ int set_cam_orientation(t_scene *scene, char *line, int index);
 int set_camera(char *line, t_scene *scene, int index);
 
 void hit_cylinder(t_cylinder *cylinders, t_ray *ray, t_hit_objet *object, int nb_cylinders);
+t_vec3 get_cylinder_normal(t_vec3 hit_point, t_cylinder *cylinder);
+void hit_circle(t_cylinder *cylindre, t_ray *ray, t_hit_objet *obj, int nb_cylinders);
+
 //_____________________A SUPRIMER_________________
 // ◈◈◈◈◈◈◈◈ debug ◈◈◈◈◈◈◈◈
 void print_data(t_scene *scene);

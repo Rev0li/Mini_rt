@@ -32,6 +32,8 @@ SRCS = src/main.c \
 		\
 		src/display/cylinder/hit_cylinder.c \
 		\
+		src/display/cylinder/hit_circle.c \
+		\
 		src/display/sphere/hit_sphere.c \
 		src/display/sphere/get_sphere_normal.c \
 		\
@@ -67,7 +69,8 @@ SRCS = src/main.c \
 		src/math/v_norm.c \
 		src/math/v_scale.c \
 		src/math/v_sub.c \
-		src/math/set_vec.c
+		src/math/set_vec.c \
+		src/math/distance.c
 
 HEADER = include/mini_rt.h	\
 		 include/struct.h

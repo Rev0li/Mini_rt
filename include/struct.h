@@ -6,7 +6,7 @@
 /*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 12:52:42 by okientzl          #+#    #+#             */
-/*   Updated: 2025/10/20 14:53:13 by yassinefahf      ###   ########.fr       */
+/*   Updated: 2025/10/21 14:07:59 by yassinefahf      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ enum e_form_geo
 {
 	SPHERE,
 	PLANE,
-	CYLINDRE
+	CYLINDRE,
+	CIRCLE_TOP,
+	CIRCLE_BOTTOM
 };
 
 typedef struct s_vec3

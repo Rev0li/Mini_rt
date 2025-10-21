@@ -3,52 +3,53 @@
 /*                                                        :::      ::::::::   */
 /*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 08:21:22 by okientzl          #+#    #+#             */
-/*   Updated: 2025/09/30 15:41:04 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/10/21 14:10:23 by yassinefahf      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "mini_rt.h"
 
-unsigned int	return_color_hex(t_hit_objet obj, t_scene scene)
+unsigned int return_color_hex(t_hit_objet obj, t_scene scene)
 {
-	unsigned int	color;
+	unsigned int color;
 
-		if (obj.form == SPHERE)
-			color = scene.spheres[obj.index].color.hex;
-		if (obj.form == PLANE)
-			color = scene.planes[obj.index].color.hex;
-		if (obj.form == CYLINDRE)
-			color = scene.cylinders[obj.index].color.hex;
+	if (obj.form == SPHERE)
+		color = scene.spheres[obj.index].color.hex;
+	if (obj.form == PLANE)
+		color = scene.planes[obj.index].color.hex;
+	if (obj.form == CYLINDRE || obj.form == CIRCLE_BOTTOM || obj.form == CIRCLE_TOP)
+		color = scene.cylinders[obj.index].color.hex;
 	return (color);
 }
 
-t_color	return_color(t_hit_objet obj, t_scene scene)
+t_color return_color(t_hit_objet obj, t_scene scene)
 {
-	t_color	color;
+	t_color color;
 
-		if (obj.form == SPHERE)
-			color = scene.spheres[obj.index].color;
-		if (obj.form == PLANE)
-			color = scene.planes[obj.index].color;
-		if (obj.form == CYLINDRE)
-			color = scene.cylinders[obj.index].color;
+	if (obj.form == SPHERE)
+		color = scene.spheres[obj.index].color;
+	if (obj.form == PLANE)
+		color = scene.planes[obj.index].color;
+	if (obj.form == CYLINDRE || obj.form == CIRCLE_TOP || obj.form == CIRCLE_BOTTOM)
+		color = scene.cylinders[obj.index].color;
 	return (color);
 }
 
-void	print_vec3(t_vec3 vec, char *name)
+void print_vec3(t_vec3 vec, char *name)
 {
 	printf("%s: (x: %.2f, y: %.2f, z: %.2f)\n", name, vec.x, vec.y, vec.z);
 }
 
-void	print_color(t_color color, char *name)
+void print_color(t_color color, char *name)
 {
 	printf("%s: (r: %d, g: %d, b: %d, hex: %#06x)\n", name,
-		color.r, color.g, color.b, color.hex);
+		   color.r, color.g, color.b, color.hex);
 }
 
-void	print_data(t_scene *scene)
+void print_data(t_scene *scene)
 {
 	printf("=== SCENE DATA ===\n");
 
@@ -110,4 +111,3 @@ void	print_data(t_scene *scene)
 
 	printf("\n=== END OF DATA ===\n");
 }
-

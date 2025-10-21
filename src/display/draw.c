@@ -6,7 +6,7 @@
 /*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 14:52:35 by okientzl          #+#    #+#             */
-/*   Updated: 2025/10/20 14:30:12 by yassinefahf      ###   ########.fr       */
+/*   Updated: 2025/10/21 14:26:58 by yassinefahf      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ t_hit_objet hit_object(t_ray ray, t_scene scene)
 	t_hit_objet obj;
 
 	obj.dist = INFINITY;
+	hit_circle(scene.cylinders, &ray, &obj, scene.nb_cylinders);
 	hit_plane(scene.planes, &ray, &obj, scene.nb_planes);
 	hit_sphere(scene.spheres, &ray, &obj, scene.nb_spheres);
 	hit_cylinder(scene.cylinders, &ray, &obj, scene.nb_cylinders);
