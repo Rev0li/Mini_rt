@@ -12,67 +12,67 @@
 
 #include "mini_rt.h"
 
-void hit_circle_top(t_cylinder *cylinder, t_ray *ray, t_hit_objet *obj, int i)
+static void	hit_caps(t_hit_circle_args args)
 {
-	double denom;
-	double pos;
-	double res;
-	double num;
-	t_vec3 circle_center;
-	t_vec3 inter;
+	t_var_circle	var;
 
-	circle_center = v_add(cylinder->center, v_scale(cylinder->axis, cylinder->height / 2));
-	denom = v_dot(ray->direction, cylinder->axis);
-	if (fabs(denom) > 1e-6)
+	var.circle_center = v_add(args.cylinder->center,
+			v_scale(args.cylinder->axis, args.height));
+	var.denom = v_dot(args.ray->direction, args.cylinder->axis);
+	if (fabs(var.denom) > 1e-6)
 	{
-		pos = v_dot(cylinder->axis, circle_center);
-		num = pos - v_dot(ray->origin, cylinder->axis);
-		res = num / denom;
-		if (res > 0 && res < obj->dist)
+		var.pos = v_dot(args.cylinder->axis, var.circle_center);
+		var.num = var.pos - v_dot(args.ray->origin, args.cylinder->axis);
+		var.res = var.num / var.denom;
+		if (var.res > 0 && var.res < args.obj->dist)
 		{
-			inter = set_vec(ray->origin.x + res * ray->direction.x, ray->origin.y + res * ray->direction.y, ray->origin.z + res * ray->direction.z);
-			if (distance(circle_center, inter) <= cylinder->diameter / 2)
+			var.inter = set_vec(
+					args.ray->origin.x + var.res * args.ray->direction.x,
+					args.ray->origin.y + var.res * args.ray->direction.y,
+					args.ray->origin.z + var.res * args.ray->direction.z);
+			if (distance(var.circle_center, var.inter)
+				<= args.cylinder->diameter / 2)
 			{
-				obj->index = i;
-				obj->dist = res;
-				obj->form = CIRCLE_TOP;
+				args.obj->index = args.i;
+				args.obj->dist = var.res;
+				args.obj->form = args.form;
 			}
 		}
 	}
 }
 
-void hit_circle_bottom(t_cylinder *cylinder, t_ray *ray, t_hit_objet *obj, int i)
+void	hit_circle_top(t_cylinder *cylinder,
+					t_ray *ray, t_hit_objet *obj, int i)
 {
-	double denom;
-	double pos;
-	double res;
-	double num;
-	t_vec3 circle_center;
-	t_vec3 inter;
+	t_hit_circle_args	args;
 
-	circle_center = v_add(cylinder->center, v_scale(cylinder->axis, -cylinder->height / 2));
-	denom = v_dot(ray->direction, cylinder->axis);
-	if (fabs(denom) > 1e-6)
-	{
-		pos = v_dot(cylinder->axis, circle_center);
-		num = pos - v_dot(ray->origin, cylinder->axis);
-		res = num / denom;
-		if (res > 0 && res < obj->dist)
-		{
-			inter = set_vec(ray->origin.x + res * ray->direction.x, ray->origin.y + res * ray->direction.y, ray->origin.z + res * ray->direction.z);
-			if (distance(circle_center, inter) <= cylinder->diameter / 2)
-			{
-				obj->index = i;
-				obj->dist = res;
-				obj->form = CIRCLE_BOTTOM;
-			}
-		}
-	}
+	args.cylinder = cylinder;
+	args.ray = ray;
+	args.obj = obj;
+	args.i = i;
+	args.height = cylinder->height / 2;
+	args.form = CIRCLE_TOP;
+	hit_caps(args);
 }
 
-void hit_circle(t_cylinder *cylindre, t_ray *ray, t_hit_objet *obj, int nb_cylinders)
+void	hit_circle_bottom(t_cylinder *cylinder,
+					t_ray *ray, t_hit_objet *obj, int i)
 {
-	int i;
+	t_hit_circle_args	args;
+
+	args.cylinder = cylinder;
+	args.ray = ray;
+	args.obj = obj;
+	args.i = i;
+	args.height = -cylinder->height / 2;
+	args.form = CIRCLE_BOTTOM;
+	hit_caps(args);
+}
+
+void	hit_circle(t_cylinder *cylindre, t_ray *ray,
+				t_hit_objet *obj, int nb_cylinders)
+{
+	int	i;
 
 	i = 0;
 	while (i < nb_cylinders)

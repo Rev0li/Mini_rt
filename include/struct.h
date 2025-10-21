@@ -6,12 +6,12 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 12:52:42 by okientzl          #+#    #+#             */
-/*   Updated: 2025/10/21 16:53:10 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/10/21 17:55:16 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef STRUCT_H
 # define STRUCT_H
-# define W_HEIGHT 1500
+# define W_HEIGHT 1080
 # define W_WIDTH 1300
 # define M_PI 3.14159265358979323846
 # include <unistd.h>
@@ -118,19 +118,29 @@ typedef struct s_plane
 	t_color	color;
 }	t_plane;
 
+typedef struct s_var_circle
+{
+	double	denom;
+	double	pos;
+	double	res;
+	double	num;
+	t_vec3	circle_center;
+	t_vec3	inter;
+}	t_var_circle;
+
 typedef struct s_var_cylinder
 {
-	double t1;
-	double t2;
-	double a;
-	double b;
-	double c;
-	double tmin;
-	t_vec3 x;
-	double proj_to_cyl;
-	t_vec3 point;
-	double discriminant;
-} t_var_cylinder;
+	double	t1;
+	double	t2;
+	double	a;
+	double	b;
+	double	c;
+	double	tmin;
+	t_vec3	x;
+	double	proj_to_cyl;
+	t_vec3	point;
+	double	discriminant;
+}	t_var_cylinder;
 
 typedef struct s_cylinder
 {
@@ -149,6 +159,37 @@ typedef struct s_hit_object
 	bool			tangent;
 	t_vec3			hit_point;
 }	t_hit_objet;
+
+typedef struct s_hit_cylinder_args
+{
+	t_cylinder	*cyl;
+	t_ray		*ray;
+	t_hit_objet	*obj;
+	int			index;
+}	t_hit_cylinder_args;
+
+typedef struct s_hit_circle_args
+{
+	t_cylinder	*cylinder;
+	t_ray		*ray;
+	t_hit_objet	*obj;
+	int			i;
+	double		height;
+	int			form;
+}	t_hit_circle_args;
+
+typedef struct s_light_vars
+{
+	t_vec3	hit_point;
+	t_vec3	normal;
+	t_vec3	light_dir;
+	t_color	obj_color;
+	t_color	final_color;
+	float	amb_r;
+	float	amb_g;
+	float	amb_b;
+	float	diff_int;
+}	t_light_vars;
 
 typedef struct s_scene
 {

@@ -6,55 +6,55 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 16:37:41 by okientzl          #+#    #+#             */
-/*   Updated: 2025/10/02 20:14:58 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/10/21 17:55:21 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "mini_rt.h"
 
-
-unsigned int add_light(t_ray ray, t_scene scene, t_hit_objet obj)
+static void	calc_ambient(t_light_vars *v, t_scene s)
 {
-	t_vec3 hit_point;
-	t_vec3 normal;
-	t_vec3 light_dir;
-	t_color object_color;
-	t_color final_color;
-	float ambient_r, ambient_g, ambient_b;
-	float diffuse_r, diffuse_g, diffuse_b;
-	float diffuse_intensity;
+	v->amb_r = v->obj_color.r * s.ambient.ratio
+		* (s.ambient.color.r / 255.0);
+	v->amb_g = v->obj_color.g * s.ambient.ratio
+		* (s.ambient.color.g / 255.0);
+	v->amb_b = v->obj_color.b * s.ambient.ratio
+		* (s.ambient.color.b / 256.0);
+}
 
-	// 1. Calculer point et normale
-	hit_point = get_hit_point(ray, obj.dist);
-	normal = get_normal(hit_point, obj, scene);
-	object_color = return_color(obj, scene);
+static void	calc_diffuse(t_light_vars *v, t_scene s)
+{
+	float	dr;
+	float	dg;
+	float	db;
 
-	// 2. LUMIÈRE AMBIANTE
-	ambient_r = object_color.r * scene.ambient.ratio * (scene.ambient.color.r / 255.0);
-	ambient_g = object_color.g * scene.ambient.ratio * (scene.ambient.color.g / 255.0);
-	ambient_b = object_color.b * scene.ambient.ratio * (scene.ambient.color.b / 255.0);
+	dr = s.light.color.r / 255.0;
+	dg = s.light.color.g / 255.0;
+	db = s.light.color.b / 255.0;
+	v->final_color.r = v->obj_color.r * v->diff_int
+		* s.light.brightness * dr;
+	v->final_color.g = v->obj_color.g * v->diff_int
+		* s.light.brightness * dg;
+	v->final_color.b = v->obj_color.b * v->diff_int
+		* s.light.brightness * db;
+}
 
-	// 3. LUMIÈRE SPOT (une seule)
-	light_dir = get_light_direction(hit_point, scene.light);
-	diffuse_intensity = calculate_diffuse(normal, light_dir);
+unsigned int	add_light(t_ray ray, t_scene s, t_hit_objet obj)
+{
+	t_light_vars	v;
 
-	// 4. Vérifier les ombres
-	if (is_in_shadow(hit_point, scene, light_dir, scene.light))
-		diffuse_intensity = 0;
-
-	// 5. Calculer diffuse
-	diffuse_r = object_color.r * diffuse_intensity * 
-		scene.light.brightness * (scene.light.color.r / 255.0);
-	diffuse_g = object_color.g * diffuse_intensity * 
-		scene.light.brightness * (scene.light.color.g / 255.0);
-	diffuse_b = object_color.b * diffuse_intensity * 
-		scene.light.brightness * (scene.light.color.b / 255.0);
-
-	// 6. COMBINER et CLAMPER
-	final_color.r = clamp(ambient_r + diffuse_r, 0, 255);
-	final_color.g = clamp(ambient_g + diffuse_g, 0, 255);
-	final_color.b = clamp(ambient_b + diffuse_b, 0, 255);
-
-	final_color.hex = (final_color.r << 16) | (final_color.g << 8) | final_color.b;
-
-	return (final_color.hex);
+	v.hit_point = get_hit_point(ray, obj.dist);
+	v.normal = get_normal(v.hit_point, obj, s);
+	v.obj_color = return_color(obj, s);
+	calc_ambient(&v, s);
+	v.light_dir = get_light_direction(v.hit_point, s.light);
+	v.diff_int = calculate_diffuse(v.normal, v.light_dir);
+	if (is_in_shadow(v.hit_point, s, v.light_dir, s.light))
+		v.diff_int = 0;
+	calc_diffuse(&v, s);
+	v.final_color.r = clamp(v.amb_r + v.final_color.r, 0, 255);
+	v.final_color.g = clamp(v.amb_g + v.final_color.g, 0, 255);
+	v.final_color.b = clamp(v.amb_b + v.final_color.b, 0, 255);
+	return ((v.final_color.r << 16)
+		| (v.final_color.g << 8)
+		| v.final_color.b);
 }

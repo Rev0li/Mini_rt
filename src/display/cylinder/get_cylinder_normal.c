@@ -13,8 +13,8 @@
 
 t_vec3	get_cylinder_normal(t_vec3 hit_point, t_cylinder *cylinder)
 {
-	t_vec3 normal;
-	double projection;
+	t_vec3	normal;
+	double	projection;
 
 	normal = v_sub(hit_point, cylinder->center);
 	projection = v_dot(normal, cylinder->axis);
