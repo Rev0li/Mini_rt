@@ -44,6 +44,8 @@ unsigned int	add_light(t_ray ray, t_scene s, t_hit_objet obj)
 
 	v.hit_point = get_hit_point(ray, obj.dist);
 	v.normal = get_normal(v.hit_point, obj, s);
+	if (obj.form == PLANE && v_dot(v.normal, ray.direction) > 0)
+		v.normal = v_scale(v.normal, -1);
 	v.obj_color = return_color(obj, s);
 	calc_ambient(&v, s);
 	v.light_dir = get_light_direction(v.hit_point, s.light);
