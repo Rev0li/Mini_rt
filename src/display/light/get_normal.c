@@ -16,7 +16,7 @@ t_vec3	get_normal(t_vec3 hit_point, t_hit_objet obj, t_scene scene)
 	if (obj.form == SPHERE)
 		return (get_sphere_normal(hit_point, &scene.spheres[obj.index]));
 	else if (obj.form == PLANE)
-		return (v_norm(scene.planes[obj.index].normal));
+		return (scene.planes[obj.index].normal);
 	else if (obj.form == CYLINDER)
 		return (get_cylinder_normal(hit_point, &scene.cylinders[obj.index]));
 	else if (obj.form == CIRCLE_TOP)

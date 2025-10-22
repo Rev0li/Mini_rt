@@ -52,10 +52,9 @@ int	parse_normalized_vector(char *line, t_vec3 *vec, int *idx)
 {
 	if (parse_coordinates(line, vec, idx) == -1)
 		return (-1);
-	if (!validate_normalized(vec->x) || !validate_normalized(vec->y)
-		|| !validate_normalized(vec->z))
-		return (-1);
 	if (vec->x == 0.0 && vec->y == 0.0 && vec->z == 0.0)
 		return (printf("Error: Normalized vector cannot be zero\n"), -1);
+	if (!validate_normalized(vec))
+		return (-1);
 	return (1);
 }

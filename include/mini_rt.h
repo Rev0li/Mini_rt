@@ -37,7 +37,7 @@ int				set_plane(char *line, t_scene *scene, int index);
 int				set_sphere(char *line, t_scene *scene, int index);
 int				set_light(char *line, t_scene *scene, int index);
 // ----- Valid_range -----
-int				validate_normalized(double value);
+int				validate_normalized(t_vec3 *vec);
 int				validate_fov(int value);
 int				validate_positive(double value);
 int				validate_ratio(double value);
