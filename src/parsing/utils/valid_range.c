@@ -23,13 +23,20 @@ int	validate_ratio(double value)
 
 int	validate_normalized(t_vec3 *vec)
 {
-	float	value;
+	// float	value;
 
-	value = v_len(*vec) - 1;
-	if (value < -0.02 || value > 0.02)
+	// value = v_len(*vec) - 1;
+	// if (value < -0.02 || value > 0.02)
+	// {
+	// 	printf("Error: Normaliz vec values must be 1, now it's %f\n",
+	// 		value + 1);
+	// 	return (0);
+	// }
+	if ((vec->x < -1 || vec->x > 1)
+		|| (vec->y < -1 || vec->y > 1)
+		|| (vec->z < -1 || vec->z > 1))
 	{
-		printf("Error: Normaliz vec values must be 1, now it's %f\n",
-			value + 1);
+		printf("Error: Normaliz vec values must be in range [-1,1]\n");
 		return (0);
 	}
 	*vec = v_norm(*vec);
