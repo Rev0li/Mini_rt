@@ -36,7 +36,6 @@ int	main(int ac, char **av)
 		{
 			exit_free(data);
 		}
-		print_data(&data->scene);
 		if (loop(data) == -1)
 		{
 			free_all(data);

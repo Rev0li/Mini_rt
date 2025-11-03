@@ -24,6 +24,8 @@
 // ◈◈◈◈◈◈◈◈ parsing ◈◈◈◈◈◈◈◈
 // ----- check_file -----
 int				check_file(char *file, t_scene *scene);
+int				ft_index_line(char *s);
+void			ft_reset(char *s, int stop);
 // ◈ utils ◈
 // ----- get_set_data.c ----- 
 int				get_data_from_file(char *file, t_scene *scene);
@@ -117,13 +119,5 @@ double			deg2rad(double d);
 t_vec3			v_norm(t_vec3 a);
 t_vec3			get_hit_point(t_ray ray, float distance);
 double			distance(t_vec3 a, t_vec3 b);
-//___________________________________________
-// ◈◈◈◈◈◈◈◈ Yass_Le_Bg ◈◈◈◈◈◈◈◈
-int				ft_index_line(char *s);
-void			ft_reset(char *s, int stop);
-//___________________________________________
-//_____________________A SUPRIMER_________________
-// ◈◈◈◈◈◈◈◈ debug ◈◈◈◈◈◈◈◈
-void	print_data(t_scene *scene);
 
 #endif

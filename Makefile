@@ -18,7 +18,6 @@ MLX_SRC = mlx_init.c mlx_new_window.c mlx_pixel_put.c mlx_loop.c \
 	mlx_destroy_display.c
 MLX_SRC := $(addprefix $(MLX_DIR)/,$(MLX_SRC))
 SRCS = src/main.c \
-	   src/debug.c \
 		\
 		src/parsing/check_file.c \
 		\
