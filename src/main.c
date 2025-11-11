@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 #include "mini_rt.h"
 
+//prepare_scene
 void	prepare_scene(t_scene *scene)
 {
 	scene->has_ambient = false;
