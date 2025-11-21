@@ -3,18 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   exit_error.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 15:40:29 by okientzl          #+#    #+#             */
-/*   Updated: 2025/08/30 15:40:29 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/11/21 14:50:20 by yassinefahf      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "mini_rt.h"
 
-void	free_scene_objects(t_scene *scene)
+void free_scene_objects(t_scene *scene)
 {
 	if (!scene)
-		return ;
+		return;
 	if (scene->spheres)
 	{
 		free(scene->spheres);
@@ -32,10 +33,10 @@ void	free_scene_objects(t_scene *scene)
 	}
 }
 
-void	free_mlx_resources(t_mlx *data)
+void free_mlx_resources(t_mlx *data)
 {
 	if (!data)
-		return ;
+		return;
 	if (data->img && data->mlx)
 	{
 		mlx_destroy_image(data->mlx, data->img);
@@ -48,22 +49,22 @@ void	free_mlx_resources(t_mlx *data)
 	}
 	if (data->mlx)
 	{
-		mlx_destroy_display(data->mlx);
+		// mlx_destroy_display(data->mlx);
 		free(data->mlx);
 		data->mlx = NULL;
 	}
 }
 
-void	free_all(t_mlx *data)
+void free_all(t_mlx *data)
 {
 	if (!data)
-		return ;
+		return;
 	free_scene_objects(&data->scene);
 	free_mlx_resources(data);
 	free(data);
 }
 
-void	exit_free(t_mlx *data)
+void exit_free(t_mlx *data)
 {
 	free_all(data);
 	exit(EXIT_FAILURE);
